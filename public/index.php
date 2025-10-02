@@ -20,4 +20,8 @@ require_once BASE_PATH . '/app/core/App.php';
 //     // require_once BASE_PATH . '/app/views/errors/404error.php';
 // });
 
-$app = new App();
+// $app = new App();
+
+$data = htmlspecialchars('<script>');
+
+echo $data;

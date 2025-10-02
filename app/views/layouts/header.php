@@ -32,10 +32,10 @@
                 <!-- <button class="btn btn-outline-primary" onclick="showAddItemModal()">
                     <i class="fas fa-plus"></i> List Item
                 </button> -->
-                <button class="btn btn-outline-primary btn-lg" onclick="window.location.href='/auth/signup'">
+                <button class="btn btn-outline-primary btn-sm" onclick="window.location.href='/auth/signup'">
                     Signup
                 </button>
-                <button class="btn btn-outline-primary btn-lg" onclick="window.location.href='/auth/login'">
+                <button class="btn btn-outline-primary btn-sm" onclick="window.location.href='/auth/login'">
                     Login
                 </button>
                 <!-- <div class="user-avatar" onclick="showPage('profile')" title="Profile">
