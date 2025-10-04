@@ -11,38 +11,38 @@
 <body>
   <div class="container">
     <h1>Sign Up</h1>
-    <form action="">
+    <form action="/auth/authSignup" enctype="multipart/form-data" method="POST">
       <div class="form-group">
-        <input type="text" required>
-        <label for="">First Name</label>
+        <input type="text" name="firstName" id="firstName" required>
+        <label for="firstName">First Name</label>
       </div>
       <div class="form-group">
-        <input type="text" required>
-        <label for="">Middle Name</label>
+        <input type="text" name="middleName" id="middleName">
+        <label for="middleName">Middle Name</label>
       </div>
       <div class="form-group">
-        <input type="text" required>
-        <label for="">Last Name</label>
+        <input type="text" name="lastName" id="lastName" required>
+        <label for="lastName">Last Name</label>
       </div>
       <div class="form-group">
-        <input type="text" required>
-        <label for="">Address Name</label>
+        <input type="text" name="address" id="address" required>
+        <label for="address">Address</label>
       </div>
       <div class="form-group">
-        <input type="email" required>
-        <label for="">Email</label>
+        <input type="email" name="email" id="email" required>
+        <label for="email">Email</label>
       </div>
       <div class="form-group">
-        <input type="file" required>
-        <label for="">Upload valid id</label>
+        <input type="file" name="validId" id="validId" required>
+        <label for="validId">Upload valid id</label>
       </div>
       <div class="form-group">
-        <input type="password" required>
-        <label for="">Password</label>
+        <input type="password" name="password" id="password" required>
+        <label for="password">Password</label>
       </div>
       <div class="form-group">
-        <input type="password" required>
-        <label for="">Confirm Password</label>
+        <input type="password" name="confirmPassword" id="confirmPassword" required>
+        <label for="confirmPassword">Confirm Password</label>
       </div>
 
       <button type="submit">Create Account</button>

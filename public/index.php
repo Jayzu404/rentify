@@ -5,7 +5,7 @@ require_once BASE_PATH . '/app/core/App.php';
 //Global exceptions/errors handling
 // set_exception_handler(function(Throwable $e){
 //     $logMessage = "<br>[" . date('M-d-Y H:i:s') . "]" . "<br>";
-//     $logMessage .= "Uncaught " . get_class($e) . ": " . $e->getMessage() . "<br>";
+//     $logMessage .= "Uncaught " . get_class($e) . ": " . $e->getMessage() . "<brP>";
 //     $logMessage .= "File: " . $e->getFile() . " (Line " . $e->getLine() . ") <br>";
 //     $logMessage .= "Stack trace:<br>";
     
@@ -20,8 +20,12 @@ require_once BASE_PATH . '/app/core/App.php';
 //     // require_once BASE_PATH . '/app/views/errors/404error.php';
 // });
 
-// $app = new App();
+$app = new App();
+// session_start();
+// echo '<pre>';
+// var_dump($_SESSION);
+// echo '</pre>';
 
-$data = htmlspecialchars('<script>');
+// $data = htmlspecialchars('<script>');
 
-echo $data;
+// echo $data;

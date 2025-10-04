@@ -1,11 +1,58 @@
 <?php
 require_once dirname(__DIR__, 2) . '/config/Views.php';
+require_once dirname(__DIR__) . '/models/AuthModel.php';
 require_once dirname(__DIR__) . '/core/Controller.php';
-require_once dirname(__DIR__) . '/helper/Sanitizer.php';
+require_once dirname(__DIR__) . '/helpers/Sanitizer.php';
+require_once dirname(__DIR__) . '/helpers/Validator.php';
 
 class AuthController extends Controller {
 
-  private function authLogin(){
+  public function authSignup(){
+    session_start();
+
+    if($_SERVER['REQUEST_METHOD'] === 'POST'){
+      //Sanitize user data/input
+      $sanitizedInputs = $this->sanitizeInputs($_POST);
+
+      //Validate user data/input
+      $validation = $this->validateInputs($sanitizedInputs);
+
+      if(!$validation['valid']){
+        header('Location: /auth/signup');
+        exit;
+      }
+
+      //Hashing the password before storing into the database
+      $hashedPassword = password_hash($sanitizedInputs['password'], PASSWORD_DEFAULT);
+      
+      //id upload directory
+      $uploadDir = dirname(__DIR__, 2) . '/storage/uploads/ids/';
+      $savedFile = Sanitizer::saveUploadedFile($sanitizedInputs['validId'], $uploadDir);
+
+      $authModel = new AuthModel();
+
+      $result = $authModel->createUser(
+        $sanitizedInputs['firstName'],
+        $sanitizedInputs['middleName'],
+        $sanitizedInputs['lastName'],
+        $sanitizedInputs['address'],
+        $sanitizedInputs['email'],
+        $savedFile,
+        $hashedPassword
+      );
+
+      if($result['status'] === 'success'){
+        header('Location: /home/index');
+        exit;
+      } else {
+        header('Location: /auth/signup');
+        exit;
+      }
+
+    }
+  }
+
+  public function authLogin(){
 
   }
 
@@ -41,14 +88,16 @@ class AuthController extends Controller {
         $sanitizedInputs[$field] = Sanitizer::sanitizeEmail($value);
       } elseif ($type === 'number') {
         $sanitizedInputs[$field] = Sanitizer::sanitizeInt($value);
+      } elseif ($type === 'file') {
+        $sanitizedInputs[$field] = Sanitizer::sanitizeFile($_FILES[$field]);
       }
     }
 
-    /**
-     * TODO: check sa ang regarding sa file upload then fish the rest of the auth features
-     */
-
     return $sanitizedInputs;
+  }
+
+  private function validateInputs($sanitizedInputs): array{
+    return Validator::validateUserRegistration($sanitizedInputs);
   }
 
 } 
