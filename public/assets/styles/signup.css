@@ -6,7 +6,7 @@
 }
 
 body {
-  background: linear-gradient(110deg, #ebac25ff, #1e40af);
+  background: linear-gradient(110deg, rgb(200, 138, 5), #1e40af);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -15,7 +15,7 @@ body {
 
 .container {
   padding: 20px;
-  max-width: 400px;
+  max-width: 450px;
   width: 100%;
 }
 
@@ -27,8 +27,12 @@ h1 {
 
 .form-group {
   position: relative;
-  height: 40px;
-  margin-bottom: 25px;
+  height: 45px;
+  margin-bottom: 35px;
+}
+
+.form-group.upload {
+  margin-bottom: 0 !important;
 }
 
 label {
@@ -39,8 +43,17 @@ label {
   color: #fff;
 }
 
-label::after {
+.form-group:not(:nth-child(2)) label::after {
   content: '*';
+  color: #f59e0b;
+}
+
+.error-msg {
+  text-align: center;
+  border-radius: 3px;
+  background-color: #d37373e9;
+  font-size: 13px;
+  color: rgb(247, 226, 222);
 }
 
 input[type='text'], input[type='password'], input[type='email'] {
@@ -67,4 +80,21 @@ button {
 
 a {
   color: #000;
+}
+
+#previewContainer {
+  margin-top: 5px;
+  margin-bottom: 25px;
+}
+
+#previewImage {
+  display: none;
+  max-height: 200px;
+  max-width: 450px;
+  border-radius: 8px;
+}
+
+#previewLabel {
+  display: none;
+  color: #fff;
 }

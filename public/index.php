@@ -5,7 +5,7 @@ require_once BASE_PATH . '/app/core/App.php';
 //Global exceptions/errors handling
 // set_exception_handler(function(Throwable $e){
 //     $logMessage = "<br>[" . date('M-d-Y H:i:s') . "]" . "<br>";
-//     $logMessage .= "Uncaught " . get_class($e) . ": " . $e->getMessage() . "<br>";
+//     $logMessage .= "Uncaught " . get_class($e) . ": " . $e->getMessage() . "<brP>";
 //     $logMessage .= "File: " . $e->getFile() . " (Line " . $e->getLine() . ") <br>";
 //     $logMessage .= "Stack trace:<br>";
     
@@ -21,3 +21,17 @@ require_once BASE_PATH . '/app/core/App.php';
 // });
 
 $app = new App();
+// session_start();
+// echo '<pre>';
+// var_dump($_SESSION);
+// echo '</pre>';
+
+// $data = htmlspecialchars('<script>');
+
+// echo $data;
+
+/**
+ * TODO: 
+ *      ADD SESSION MANAGEMENT TO INFORM THE USER WHATS GOING ON (eg. wrong inputs)
+ *      IMPLEMENT PROPER REDIRECTION
+ */

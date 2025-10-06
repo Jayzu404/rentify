@@ -8,7 +8,7 @@ CREATE TABLE users(
   middle_name VARCHAR(50) NULL,
   last_name VARCHAR(50) NOT NULL,
   address VARCHAR(50) NOT NULL,
-  email VARCHAR(50) NOT NULL,
+  email VARCHAR(50) NOT NULL UNIQUE,
   id_path VARCHAR(255) NOT NULL,
   password VARCHAR(255) NOT NULL,
   created_at DATETIME NOT NULL
@@ -19,13 +19,14 @@ CREATE TABLE admins(
   admin_name VARCHAR(50) NOT NULL,
   admin_middlename VARCHAR(50) NULL,
   admin_lastname VARCHAR(50) NOT NULL,
-  email VARCHAR(255) NOT NULL,
+  email VARCHAR(255) NOT NULL UNIQUE,
   password VARCHAR(255) NOT NULL,
   created_at DATETIME NOT NULL
 );
 
 CREATE TABLE items (
   item_id INT PRIMARY KEY AUTO_INCREMENT,
+  uid INT NOT NULL,
   item_name VARCHAR(25) NOT NULL,
   description TEXT NOT NULL,
   category VARCHAR(50) NOT NULL,
