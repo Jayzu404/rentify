@@ -1,3 +1,9 @@
+<?php
+  if(session_status() !== PHP_SESSION_ACTIVE){
+    session_start();
+  }
+?>
+
 <style>
     .navbar-brand {
         font-weight: bold;
@@ -29,18 +35,22 @@
             </ul>
             
             <div class="d-flex align-items-center gap-3">
-                <!-- <button class="btn btn-outline-primary" onclick="showAddItemModal()">
-                    <i class="fas fa-plus"></i> List Item
-                </button> -->
-                <button class="btn btn-outline-primary btn-sm" onclick="window.location.href='/auth/signup'">
-                    Signup
-                </button>
-                <button class="btn btn-outline-primary btn-sm" onclick="window.location.href='/auth/login'">
-                    Login
-                </button>
-                <!-- <div class="user-avatar" onclick="showPage('profile')" title="Profile">
-                    JD
-                </div> -->
+                <?php if (isset($_SESSION['isLoggedIn']) && $_SESSION['isLoggedIn']): ?>
+                    <button class="btn btn-outline-primary" onclick="showAddItemModal()">
+                        <i class="fas fa-plus"></i> List Item
+                    </button> 
+
+                    <div class="user-avatar" onclick="showPage('profile')" title="Profile">
+                        JD
+                    </div>
+                <?php else: ?>    
+                    <button class="btn btn-outline-primary btn-sm" onclick="window.location.href='/auth/signup'">
+                        Signup
+                    </button>
+                    <button class="btn btn-outline-primary btn-sm" onclick="window.location.href='/auth/login'">
+                        Login
+                    </button>
+                <?php endif; ?>    
             </div>
         </div>
     </div>

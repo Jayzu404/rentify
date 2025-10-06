@@ -12,13 +12,16 @@ class AuthController extends Controller {
 
     if($_SERVER['REQUEST_METHOD'] === 'POST'){
       //Sanitize user data/input
-      $sanitizedInputs = $this->sanitizeInputs($_POST);
+      $sanitizedInputs = $this->signupSanitizeInputs($_POST);
 
       //Validate user data/input
-      $validation = $this->validateInputs($sanitizedInputs);
+      $validation = $this->validateInputs($sanitizedInputs, 'signup');
+
+      //Store user data/input in session
+      $this->userDataSession($sanitizedInputs, 'signup');
 
       if(!$validation['valid']){
-        header('Location: /auth/signup');
+        header('Location: /auth/signup?signup=failed');
         exit;
       }
 
@@ -41,11 +44,14 @@ class AuthController extends Controller {
         $hashedPassword
       );
 
-      if($result['status'] === 'success'){
-        header('Location: /home/index');
+      if($result['success']){
+        unset($_SESSION['userFormData'], $_SESSION['errors']);
+        $_SESSION['successSignup'] = true;
+        header('Location: /auth/login?signup=success');
         exit;
       } else {
-        header('Location: /auth/signup');
+        $this->handleRegistrationErrors($result['error']);
+        header('Location: /auth/signup?signup=failed');
         exit;
       }
 
@@ -53,7 +59,39 @@ class AuthController extends Controller {
   }
 
   public function authLogin(){
+    if($_SERVER['REQUEST_METHOD'] === 'POST'){
 
+      if(session_status() !== PHP_SESSION_ACTIVE){
+        session_start();
+      }
+
+      $sanitizedInputs = $this->loginSanitizeInput($_POST);
+
+      $validation = $this->validateInputs($sanitizedInputs, 'login');
+
+      if(!$validation['valid']){
+        header('/auth/login?login=failed');
+        exit;
+      }
+
+      $this->userDataSession($sanitizedInputs, 'login');
+
+      $authModel = new AuthModel();
+      $result = $authModel->authenticateUser($sanitizedInputs['email'], $sanitizedInputs['password']);
+
+      if($result['success']){
+        unset($_SESSION['userFormData'], $_SESSION['errors']);
+        $_SESSION['user'] = $result['user'];
+        $_SESSION['isLoggedIn'] = true;
+        header('Location: /home');
+        exit;
+      } else {
+        $this->handleLoginAuthenticationErrors($result['error']);
+        $_SESSION['isLoggedIn'] = false;
+        header('Location: /auth/login?login=failed');
+        exit;
+      }
+    }
   }
 
   public function login(){
@@ -64,7 +102,34 @@ class AuthController extends Controller {
     $this->view(Views::SIGNUP);
   }
 
-  private function sanitizeInputs(array $postData): array {
+  private function userDataSession(array $sanitizedInputs, $type): void{
+    switch($type){
+      case 'signup':
+        $fields = [
+          'firstName',
+          'middleName',
+          'lastName',
+          'address',
+          'email',
+          'password',
+          'confirmPassword',
+          'validId'
+        ];
+
+        $_SESSION['userFormData'] = [];
+
+        foreach($fields as $field){
+          $_SESSION['userFormData'][$field] = $sanitizedInputs[$field];
+        }
+
+        break;
+      case 'login':
+        $_SESSION['userFormData']['email'] = $sanitizedInputs['email'];
+        break;
+    }
+  }
+
+  private function signupSanitizeInputs(array $postData): array {
     $fields = [
       'firstName'    => 'string',
       'middleName'   => 'string|null',
@@ -96,8 +161,59 @@ class AuthController extends Controller {
     return $sanitizedInputs;
   }
 
-  private function validateInputs($sanitizedInputs): array{
-    return Validator::validateUserRegistration($sanitizedInputs);
+  private function loginSanitizeInput(array $postData): array{
+    $fields = [
+      'email' => 'email',
+      'password' => 'password'
+    ];
+
+    $sanitizedInputs = [];
+
+    foreach($fields as $field => $type){
+      $value = $postData[$field] ?? null;
+
+      if ($type === 'email') {
+        $sanitizedInputs[$field] = Sanitizer::sanitizeEmail($value);
+      } elseif ($type === 'password') {
+        $sanitizedInputs[$field] = Sanitizer::sanitizeString($value);
+      }
+    }
+
+    return $sanitizedInputs;
+  }
+
+  private function validateInputs($sanitizedInputs, $type): array{
+    switch($type){
+      case 'signup':
+        return Validator::validateUserRegistration($sanitizedInputs);
+      case 'login':
+        return Validator::validateUserLogin($sanitizedInputs);
+    }
+    return [];
+  }
+
+  private function handleRegistrationErrors($errors){
+    switch($errors){
+      case 'EMAIL_EXIST':
+      case 'DUPLICATE_ENTRY':
+        $_SESSION['errors']['email'] = 'Email already exist';
+        break;
+      case 'INSERT_FAILED':
+      case 'DATABASE_ERROR':
+        $_SESSION['errors']['general'] = 'Something went wrong, Please try again later';
+        break;
+    }
+  }
+
+  private function handleLoginAuthenticationErrors($errors){
+    switch($errors){
+      case 'DATABASE_ERROR':
+        $_SESSION['errors']['general'] = 'Something went wrong, Please try again later';
+        break;
+      case 'INVALID_CREDENTIALS':
+        $_SESSION['errors']['general'] = 'Incorrect email or password';
+        break;
+    }
   }
 
 } 

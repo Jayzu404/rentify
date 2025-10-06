@@ -6,7 +6,7 @@
 }
 
 body {
-  background: linear-gradient(110deg, #ebac25ff, #1e40af);
+  background: linear-gradient(110deg, rgb(200, 138, 5), #1e40af);
   min-height: 100vh;
   display: flex;
   justify-content: center;

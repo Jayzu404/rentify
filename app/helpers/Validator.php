@@ -47,13 +47,13 @@ class Validator {
     }
     
     // Password validation
-    if (!self::isRequired($data['password'] ?? '')) {
-      $errors['password'] = 'Password is required';
-    } elseif (!self::minLength($data['password'], 8)) {
-      $errors['password'] = 'Password must be at least 8 characters';
-    } elseif (!self::isStrongPassword($data['password'])) {
-      $errors['password'] = 'Password must contain uppercase, lowercase, number, and special character';
-    }
+    // if (!self::isRequired($data['password'] ?? '')) {
+    //   $errors['password'] = 'Password is required';
+    // } elseif (!self::minLength($data['password'], 8)) {
+    //   $errors['password'] = 'Password must be at least 8 characters';
+    // } elseif (!self::isStrongPassword($data['password'])) {
+    //   $errors['password'] = 'Please choose strong password with mixed characters';
+    // }
     
     // Confirm password
     if (isset($data['confirmPassword']) && $data['password'] !== $data['confirmPassword']) {
@@ -65,6 +65,31 @@ class Validator {
       $errors['validId'] = "Valid ID is required";
     }
     
+    if(session_status() !== PHP_SESSION_ACTIVE){
+      session_start();
+    }
+    
+    $_SESSION['errors'] = $errors;
+    
+    return [
+      'valid' => empty($errors),
+      'errors' => $errors
+    ];
+  }
+
+  public static function validateUserLogin($data){
+    $errors = [];
+
+    if (!self::isRequired($data['email'] ?? '')) {
+      $errors['Email'] = 'Email is required';
+    } elseif(!self::isValidEmail($data['email'])) {
+      $errors['email'] = 'Invalid email, Please try again';
+    }
+
+    if (!self::isRequired($data['password'] ?? '')) {
+      $errors['password'] = 'Password is required';
+    }
+
     return [
       'valid' => empty($errors),
       'errors' => $errors

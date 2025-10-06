@@ -29,3 +29,9 @@ $app = new App();
 // $data = htmlspecialchars('<script>');
 
 // echo $data;
+
+/**
+ * TODO: 
+ *      ADD SESSION MANAGEMENT TO INFORM THE USER WHATS GOING ON (eg. wrong inputs)
+ *      IMPLEMENT PROPER REDIRECTION
+ */

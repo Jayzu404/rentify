@@ -47,7 +47,7 @@ class AuthModel extends DbConnection {
             return [
                 'success' => false,
                 'userId' => null,
-                'error' => 'EMAIL_EXISTS'
+                'error' => 'EMAIL_EXIST'
             ];
         }
 
@@ -133,4 +133,44 @@ class AuthModel extends DbConnection {
             return true;
         }
     }
+
+    public function authenticateUser($email, $password){
+        $db = $this->connect();
+        $query = "SELECT uid, email, password FROM users WHERE email = :email LIMIT 1";
+
+        try {
+            $stmt = $db->prepare($query);
+            $stmt->execute([':email' => $email]);
+
+            $user = $stmt->fetch();
+
+            /**
+             * TIMING ATTACK PREVENTION: use password_verify() function either email exist or not
+             */
+            $userPassword = $user['password'] ?? '';
+            $isPasswordCorrect = password_verify($password, $userPassword);
+
+            $isAuthenticated = $user && $isPasswordCorrect;
+
+            if(!$isAuthenticated){
+                error_log("Failed login attempt for email: " . $email);
+                return ['success' => false, 'error' => 'INVALID_CREDENTIALS', 'user' => null];
+            }
+
+            // Log successful authentication
+            error_log("Successful login for user ID: " . $user['uid']);
+            
+            return [
+                'success' => true, 
+                'user' => ['id' => $user['uid'], 'email' => $user['email']],
+                'error' => null
+            ];
+
+        } catch (PDOException $e) {
+            // Log database error during authentication
+            error_log("Database error during authentication: " . $e->getMessage());
+            return ['success' => false, 'error' => 'DATABASE_ERROR', 'user' => null];
+        }
+    }
+
 }
