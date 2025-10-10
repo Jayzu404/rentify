@@ -9,7 +9,9 @@ class App {
 
   private $allowedControllers = [
     'home' =>'HomeController',
-    'auth' => 'AuthController'
+    'auth' => 'AuthController',
+    'item' => 'ItemController',
+    'dashboard' => 'DashboardController'
   ];
 
   public function __construct()
