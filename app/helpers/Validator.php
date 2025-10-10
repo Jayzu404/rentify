@@ -64,13 +64,7 @@ class Validator {
     if (!isset($data['validId'])) {
       $errors['validId'] = "Valid ID is required";
     }
-    
-    if(session_status() !== PHP_SESSION_ACTIVE){
-      session_start();
-    }
-    
-    $_SESSION['errors'] = $errors;
-    
+        
     return [
       'valid' => empty($errors),
       'errors' => $errors
@@ -81,7 +75,7 @@ class Validator {
     $errors = [];
 
     if (!self::isRequired($data['email'] ?? '')) {
-      $errors['Email'] = 'Email is required';
+      $errors['email'] = 'Email is required';
     } elseif(!self::isValidEmail($data['email'])) {
       $errors['email'] = 'Invalid email, Please try again';
     }

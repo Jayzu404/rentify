@@ -17,6 +17,7 @@ class Views {
   const HOME = 'pages/home';
   const ABOUT = 'pages/about';
   const CONTACT = 'pages/contact';
+  const BROWSE_ITEMS = '/pages/browse_items';
   
   // ==================== AUTH ====================
   const LOGIN = 'auth/login';
@@ -24,12 +25,9 @@ class Views {
   const FORGOT_PASSWORD = 'auth/forgot_password';
   const RESET_PASSWORD = 'auth/reset_password';
   
-  // ==================== STUDENTS ====================
-  const STUDENT_DASHBOARD = 'students/dashboard';
-  const STUDENT_PROFILE = 'students/profile';
-  const STUDENT_COURSES = 'students/courses';
-  const STUDENT_GRADES = 'students/grades';
-  
+  // ==================== USERS ====================
+  const USER_DASHBOARD = 'pages/user_dashboard';
+
   // ==================== LAYOUTS ====================
   const SUCCESS_SIGNUP = 'layouts/success_signup';
   const ERROR_PAGE = 'layouts/error';
