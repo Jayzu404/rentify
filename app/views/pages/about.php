@@ -250,6 +250,38 @@
           </div>
         </div>
 
+        <div class="col-md-3 col-sm-6">
+          <div class="team-member text-center p-4">
+            <h5 class="member-name">Joey Ibanez</h5>
+            <p class="member-role">Desinger, AI engineer, Cloud Engineer, Data Analyst, NASA Astronaut, Former U.S President, Former WBO Champion, 20 Division Champion, Former Member of Power Ranger, Former Member of F4, Former Kagawad, Created Half of the Universe, LGBT Leader, First Human discovered, BIPSU National Treasure, Endangered Species, Miss Universe 2000-2025, Top Global Zilong, Miya, Belerick, Brody, Angela, World War I & II Veteran, Pokemon Gym Leader, Created I Hate You Virus, Raises Tarzan, Painted Mona Lisa, Professor/Mentor of Da Vinci, Einstein, Tesla, Isaac Newton, Elon Musk, Father of Philippine Revolution, Killed Magellan & Lapu-Lapu, Victoria Secret Super model, Bollywood Award Winning Actor, Special Child and many more...</p>
+            <p class="member-desc">Coordinates product development and ensures timely delivery with team synergy.</p>
+          </div>
+        </div>
+
+        <div class="col-md-3 col-sm-6">
+          <div class="team-member text-center p-4">
+            <h5 class="member-name">Grace Temblor</h5>
+            <p class="member-role">Project Manager</p>
+            <p class="member-desc">Coordinates product development and ensures timely delivery with team synergy.</p>
+          </div>
+        </div>
+
+        <div class="col-md-3 col-sm-6">
+          <div class="team-member text-center p-4">
+            <h5 class="member-name">Grace Temblor</h5>
+            <p class="member-role">Project Manager</p>
+            <p class="member-desc">Coordinates product development and ensures timely delivery with team synergy.</p>
+          </div>
+        </div>
+
+        <div class="col-md-3 col-sm-6">
+          <div class="team-member text-center p-4">
+            <h5 class="member-name">Grace Temblor</h5>
+            <p class="member-role">Project Manager</p>
+            <p class="member-desc">Coordinates product development and ensures timely delivery with team synergy.</p>
+          </div>
+        </div>
+
       </div>
     </div>
   </section>

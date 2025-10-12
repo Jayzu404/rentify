@@ -23,14 +23,14 @@ class Sanitizer{
    * Sanitize an integer (e.g. age, quantity, id)
    */
   public static function sanitizeInt(?String $data): int {
-    return filter_var($data, FILTER_SANITIZE_NUMBER_INT) ?? 0;
+    return (int) filter_var($data, FILTER_SANITIZE_NUMBER_INT) ?? 0;
   }
 
   /**
    * Sanitize a float/decimal (e.g. price, amount)
    */
   public static function sanitizeFloat(?String $data): float {
-    return filter_var($data, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION) ?? 0.0;
+    return (float) filter_var($data, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION) ?? 0.0;
   }
 
   /**
@@ -39,6 +39,63 @@ class Sanitizer{
   public static function sanitizeEmail(?string $email): string {
     $email = filter_var(trim($email), FILTER_SANITIZE_EMAIL);
     return filter_var($email, FILTER_VALIDATE_EMAIL) ? $email : '';
+  }
+
+  /**
+   * Sanitize and validate a date (expects YYYY-MM-DD format from type="date" input)
+   * @param string|null $date The date string to validate
+   * @param string $format Expected date format (default: Y-m-d)
+   * @return string|null Returns validated date string or null if invalid
+   */
+  public static function sanitizeDate(?string $date, string $format = 'Y-m-d'): ?string {
+    if ($date === null || trim($date) === '') {
+      return null;
+    }
+    
+    $date = trim($date);
+    
+    // Validate format pattern (YYYY-MM-DD)
+    if (!preg_match('/^\d{4}-\d{2}-\d{2}$/', $date)) {
+      return null;
+    }
+    
+    // Verify it's a real, valid date
+    $dateObj = DateTime::createFromFormat($format, $date);
+    
+    // Check if date was parsed correctly and matches original string
+    // This catches invalid dates like 2024-02-30 or 2024-13-01
+    if (!$dateObj || $dateObj->format($format) !== $date) {
+      return null;
+    }
+    
+    return $date;
+  }
+  
+  /**
+   * Sanitize and validate a datetime (expects YYYY-MM-DD HH:MM:SS format)
+   * @param string|null $datetime The datetime string to validate
+   * @return string|null Returns validated datetime string or null if invalid
+   */
+  public static function sanitizeDateTime(?string $datetime): ?string {
+    if ($datetime === null || trim($datetime) === '') {
+      return null;
+    }
+    
+    $datetime = trim($datetime);
+    
+    // Validate format pattern (YYYY-MM-DD HH:MM:SS)
+    if (!preg_match('/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/', $datetime)) {
+      return null;
+    }
+    
+    // Verify it's a real, valid datetime
+    $dateObj = DateTime::createFromFormat('Y-m-d H:i:s', $datetime);
+    
+    if (!$dateObj || $dateObj->format('Y-m-d H:i:s') !== $datetime) {
+      return null;
+    }
+    
+    return $datetime;
   }
 
   public static function sanitizeFile($file) {

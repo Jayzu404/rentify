@@ -1,7 +1,10 @@
-CREATE DATABASE rentify;
+CREATE DATABASE rentify_db;
 
-USE rentify
+USE rentify_db;
 
+-- ===============================
+-- USERS
+-- ===============================
 CREATE TABLE users(
   uid INT PRIMARY KEY AUTO_INCREMENT,
   first_name VARCHAR(50) NOT NULL,
@@ -14,6 +17,9 @@ CREATE TABLE users(
   created_at DATETIME NOT NULL
 );
 
+-- ===============================
+-- ADMINS
+-- ===============================
 CREATE TABLE admins(
   admin_id INT PRIMARY KEY AUTO_INCREMENT,
   admin_name VARCHAR(50) NOT NULL,
@@ -24,26 +30,73 @@ CREATE TABLE admins(
   created_at DATETIME NOT NULL
 );
 
+-- ===============================
+-- ITEMS
+-- ===============================
 CREATE TABLE items (
-  item_id INT PRIMARY KEY AUTO_INCREMENT,
-  uid INT NOT NULL,
-  item_name VARCHAR(25) NOT NULL,
-  description TEXT NOT NULL,
-  category VARCHAR(50) NOT NULL,
-  price_per_day DECIMAL(10,2) NOT NULL,
-  image_path VARCHAR(50) NOT NULL,
-  status ENUM('available', 'rented', 'unavailable') DEFAULT 'available',
-  added_at DATETIME NOT NULL,
-  updated_at DATETIME NOT NULL,
-  FOREIGN KEY (uid) REFERENCES users(uid) ON DELETE CASCADE
+  item_id INT AUTO_INCREMENT PRIMARY KEY,
+  owner_uid INT NOT NULL,
+  title VARCHAR(150) NOT NULL,
+  description TEXT,
+  brand VARCHAR(25),
+  location VARCHAR(150),
+  item_condition ENUM('brand_new', 'like_new', 'good', 'fair', 'poor') NOT NULL DEFAULT 'good',
+  image_path VARCHAR(255) NOT NULL,
+  status ENUM('available', 'unavailable', 'maintenance') DEFAULT 'available',
+  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (owner_uid) REFERENCES users(uid) ON DELETE CASCADE
 );
 
-CREATE TABLE rental (
-  rented_at DATETIME NOT NULL,
+-- ===============================
+-- RENTAL PRICING
+-- ===============================
+CREATE TABLE rental_pricing (
+  pricing_id INT AUTO_INCREMENT PRIMARY KEY,
+  item_id INT NOT NULL,
+  rate_type ENUM('per_day', 'per_week') NOT NULL,
+  price DECIMAL(10,2) NOT NULL,
+  minimum_duration INT NOT NULL,
+  FOREIGN KEY (item_id) REFERENCES items(item_id) ON DELETE CASCADE
+);
+
+-- ===============================
+-- AVAILABILITY
+-- ===============================
+CREATE TABLE item_availability (
+  availability_id INT AUTO_INCREMENT PRIMARY KEY,
+  item_id INT NOT NULL,
+  available_from DATE NOT NULL,
+  available_until DATE NOT NULL,
+  FOREIGN KEY (item_id) REFERENCES items(item_id) ON DELETE CASCADE
+);
+
+-- ===============================
+-- CANCELLATION POLICY
+-- ===============================
+CREATE TABLE cancellation_policies (
+  policy_id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(100) NOT NULL,
+  description TEXT,
+  refund_percentage DECIMAL(5,2) NOT NULL CHECK (refund_percentage BETWEEN 0 AND 100)
+);
+
+-- ===============================
+-- RENTALS (bookings)
+-- ===============================
+CREATE TABLE rentals (
+  rental_id INT AUTO_INCREMENT PRIMARY KEY,
+  item_id INT NOT NULL,
+  renter_uid INT NOT NULL,
+  pricing_id INT NOT NULL,
+  policy_id INT,
+  start_date DATE NOT NULL,
+  end_date DATE NOT NULL,
+  total_amount DECIMAL(10,2) NOT NULL,
+  status ENUM('pending', 'confirmed', 'ongoing', 'completed', 'cancelled') DEFAULT 'pending',
+  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (item_id) REFERENCES items(item_id) ON DELETE CASCADE,
-  FOREIGN KEY (uid) REFERENCES users(uid) ON DELETE CASCADE
-);
-
-CREATE TABLE payment(
-  
+  FOREIGN KEY (renter_uid) REFERENCES users(uid) ON DELETE CASCADE,
+  FOREIGN KEY (pricing_id) REFERENCES rental_pricing(pricing_id) ON DELETE RESTRICT,
+  FOREIGN KEY (policy_id) REFERENCES cancellation_policies(policy_id) ON DELETE SET NULL
 );

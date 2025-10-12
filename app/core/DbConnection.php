@@ -3,7 +3,7 @@
 class DbConnection {
   private $host = 'localhost';
   private $user = 'root';
-  private $dbName = 'rental_system';
+  private $dbName = 'rentify_db';
   private $password = '';
 
   protected function connect(){

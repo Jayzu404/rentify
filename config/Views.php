@@ -18,6 +18,9 @@ class Views {
   const ABOUT = 'pages/about';
   const CONTACT = 'pages/contact';
   const BROWSE_ITEMS = '/pages/browse_items';
+  const ADD_ITEM = '/pages/add-item';
+  const TERMS_AND_CONDITIONS = '/pages/terms-and-conditions';
+  const VIEW_ITEM_DETAILS = '/pages/view-item';
   
   // ==================== AUTH ====================
   const LOGIN = 'auth/login';

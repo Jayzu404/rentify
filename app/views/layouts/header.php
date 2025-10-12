@@ -122,17 +122,21 @@ $current_page = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
       <div class="d-flex align-items-center gap-2">
         <?php if (!empty($_SESSION['isLoggedIn'])): ?>
             <?php if ($current_page === '/home' || $current_page === '/'): ?>
-                <button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#rentifyModal">
+                <button type="button" class="btn btn-outline-primary btn-md" onclick="window.location.href='/item/create'">
                 <i class="bi bi-plus-circle"></i> List Item
                 </button>
             <?php endif; ?>  
 
-            <div class="user-avatar ms-3" title="Profile" onclick="window.location.href='/profile'">
-                <img src="/assets/images/default-avatar.jpg" alt="User" width="45" height="45">
-            </div>
-            <button type="button" class="btn btn-danger btn-md" data-bs-toggle="modal" data-bs-target="#rentifyModal" onclick="window.location.href='/auth/logout'">
-                <i class="bi bi-box-arrow-right"></i> Logout
+            <button type="button" class="btn btn-danger d-none d-md-block btn-md" data-bs-toggle="modal" data-bs-target="#rentifyModal" onclick="window.location.href='/auth/logout'">
+              <i class="bi bi-box-arrow-right"></i> Logout
             </button>
+            <button type="button" class="btn btn-danger d-block d-md-none btn-sm" data-bs-toggle="modal" data-bs-target="#rentifyModal" onclick="window.location.href='/auth/logout'">
+              <i class="bi bi-box-arrow-right"></i> Logout
+            </button>
+
+            <div class="user-avatar ms-3" title="Profile" onclick="window.location.href='/profile'">
+              <img src="/assets/images/cat-pfp.jpg" alt="User" width="45" height="45">
+            </div>
         <?php else: ?>    
           <button class="btn btn-outline-primary btn-sm me-2" onclick="window.location.href='/auth/signup'">Signup</button>
           <button class="btn btn-outline-primary btn-sm" onclick="window.location.href='/auth/login'">Login</button>

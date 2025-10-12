@@ -7,7 +7,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Rentify - Rental Items</title>
+  <title>Browse Items | Rentify</title>
 
   <!-- Bootstraps -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -27,73 +27,144 @@
 <div class="container py-5">
   <h2 class="text-center fw-semibold mb-5">Available Rentals</h2>
   <div class="row g-4">
-
     <!-- Rental Card #1 -->
     <div class="col-md-4 col-sm-6">
       <div class="card rental-card">
-        <img src="https://images.unsplash.com/photo-1596495577886-d920f1fb7238" alt="Calculator">
+        <img src="https://images.unsplash.com/photo-1596495577886-d920f1fb7238" alt="Scientific Calculator">
         <div class="card-body">
           <h5 class="rental-title">Scientific Calculator</h5>
           <p class="rental-category">School Essentials</p>
+
+          <!-- Short description -->
+          <p class="rental-description text-muted small">
+            Casio FX-991EX with complete functions, perfect for engineering and math students.
+          </p>
+
+          <!-- Price & availability -->
           <div class="d-flex justify-content-between align-items-center mb-2">
             <div>
-              <span class="rental-price">₱80</span>
+              <span class="rental-price fw-semibold">₱80</span>
               <span class="price-duration">/day</span>
             </div>
-            <span class="availability">Available</span>
+            <span class="availability text-success">Available</span>
           </div>
+
+          <!-- Owner & location -->
+          <div class="rental-meta mb-2 text-muted small">
+            <i class="bi bi-person-circle me-1"></i> Owned by <strong>John D.</strong><br>
+            <i class="bi bi-geo-alt me-1"></i> Near FEU Tech, Manila
+          </div>
+
+          <!-- Rating -->
+          <div class="rental-rating mb-3 text-warning">
+            <i class="bi bi-star-fill"></i>
+            <i class="bi bi-star-fill"></i>
+            <i class="bi bi-star-fill"></i>
+            <i class="bi bi-star-half"></i>
+            <i class="bi bi-star"></i>
+            <span class="text-muted small">(3.5)</span>
+          </div>
+
+          <!-- Buttons -->
           <div class="d-flex gap-2">
-            <button class="btn btn-view w-50">View</button>
+            <button class="btn btn-view w-50" onclick="window.location.href='/item/detail'">View</button>
             <button class="btn btn-rent w-50">Rent Now</button>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Rental Card #2 -->
     <div class="col-md-4 col-sm-6">
       <div class="card rental-card">
-        <img src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8" alt="Laptop">
+        <img src="https://images.unsplash.com/photo-1596495577886-d920f1fb7238" alt="Scientific Calculator">
         <div class="card-body">
-          <h5 class="rental-title">HP Pavilion Laptop</h5>
-          <p class="rental-category">Electronics</p>
+          <h5 class="rental-title">Scientific Calculator</h5>
+          <p class="rental-category">School Essentials</p>
+
+          <!-- Short description -->
+          <p class="rental-description text-muted small">
+            Casio FX-991EX with complete functions, perfect for engineering and math students.
+          </p>
+
+          <!-- Price & availability -->
           <div class="d-flex justify-content-between align-items-center mb-2">
             <div>
-              <span class="rental-price">₱500</span>
+              <span class="rental-price fw-semibold">₱80</span>
               <span class="price-duration">/day</span>
             </div>
-            <span class="availability">Few Left</span>
+            <span class="availability text-success">Available</span>
           </div>
+
+          <!-- Owner & location -->
+          <div class="rental-meta mb-2 text-muted small">
+            <i class="bi bi-person-circle me-1"></i> Owned by <strong>John D.</strong><br>
+            <i class="bi bi-geo-alt me-1"></i> Near FEU Tech, Manila
+          </div>
+
+          <!-- Rating -->
+          <div class="rental-rating mb-3 text-warning">
+            <i class="bi bi-star-fill"></i>
+            <i class="bi bi-star-fill"></i>
+            <i class="bi bi-star-fill"></i>
+            <i class="bi bi-star-half"></i>
+            <i class="bi bi-star"></i>
+            <span class="text-muted small">(3.5)</span>
+          </div>
+
+          <!-- Buttons -->
           <div class="d-flex gap-2">
-            <button class="btn btn-view w-50">View</button>
+            <button class="btn btn-view w-50" onclick="window.location.href='/item/detail'">View</button>
             <button class="btn btn-rent w-50">Rent Now</button>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Rental Card #3 -->
     <div class="col-md-4 col-sm-6">
       <div class="card rental-card">
-        <img src="https://images.unsplash.com/photo-1557800636-894a64c1696f" alt="Tripod">
+        <img src="https://images.unsplash.com/photo-1596495577886-d920f1fb7238" alt="Scientific Calculator">
         <div class="card-body">
-          <h5 class="rental-title">Adjustable Tripod Stand</h5>
-          <p class="rental-category">Media Equipment</p>
+          <h5 class="rental-title">Scientific Calculator</h5>
+          <p class="rental-category">School Essentials</p>
+
+          <!-- Short description -->
+          <p class="rental-description text-muted small">
+            Casio FX-991EX with complete functions, perfect for engineering and math students.
+          </p>
+
+          <!-- Price & availability -->
           <div class="d-flex justify-content-between align-items-center mb-2">
             <div>
-              <span class="rental-price">₱120</span>
+              <span class="rental-price fw-semibold">₱80</span>
               <span class="price-duration">/day</span>
             </div>
-            <span class="availability text-danger">Out of Stock</span>
+            <span class="availability text-success">Available</span>
           </div>
+
+          <!-- Owner & location -->
+          <div class="rental-meta mb-2 text-muted small">
+            <i class="bi bi-person-circle me-1"></i> Owned by <strong>John D.</strong><br>
+            <i class="bi bi-geo-alt me-1"></i> Near FEU Tech, Manila
+          </div>
+
+          <!-- Rating -->
+          <div class="rental-rating mb-3 text-warning">
+            <i class="bi bi-star-fill"></i>
+            <i class="bi bi-star-fill"></i>
+            <i class="bi bi-star-fill"></i>
+            <i class="bi bi-star-half"></i>
+            <i class="bi bi-star"></i>
+            <span class="text-muted small">(3.5)</span>
+          </div>
+
+          <!-- Buttons -->
           <div class="d-flex gap-2">
-            <button class="btn btn-view w-50">View</button>
-            <button class="btn btn-rent w-50" disabled>Rent Now</button>
+            <button class="btn btn-view w-50" onclick="window.location.href='/item/detail'">View</button>
+            <button class="btn btn-rent w-50">Rent Now</button>
           </div>
         </div>
       </div>
     </div>
-
   </div>
 </div>
 

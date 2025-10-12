@@ -10,4 +10,8 @@
     public function about(){
       $this->view(Views::ABOUT);
     }
+
+    public function terms(){
+      $this->view(Views::TERMS_AND_CONDITIONS);
+    }
   }

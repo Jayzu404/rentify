@@ -217,7 +217,7 @@ class AuthController extends Controller {
     return $sanitizedInputs;
   }
 
-  private function validateInputs($sanitizedInputs, $type): array{
+  private function validateInputs($sanitizedInputs, $type): array {
     switch($type){
       case 'signup':
         return Validator::validateUserRegistration($sanitizedInputs);
