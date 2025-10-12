@@ -134,7 +134,7 @@ $current_page = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
               <i class="bi bi-box-arrow-right"></i> Logout
             </button>
 
-            <div class="user-avatar ms-3" title="Profile" onclick="window.location.href='/profile'">
+            <div class="user-avatar ms-3" title="Profile" onclick="window.location.href='/user/profile'">
               <img src="/assets/images/cat-pfp.jpg" alt="User" width="45" height="45">
             </div>
         <?php else: ?>    

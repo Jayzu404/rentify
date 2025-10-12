@@ -8,10 +8,11 @@ class App {
   private $params = [];
 
   private $allowedControllers = [
-    'home' =>'HomeController',
-    'auth' => 'AuthController',
-    'item' => 'ItemController',
-    'dashboard' => 'DashboardController'
+    'home'      => 'HomeController',
+    'auth'      => 'AuthController',
+    'item'      => 'ItemController',
+    'dashboard' => 'DashboardController',
+    'user'      => 'UserController'
   ];
 
   public function __construct()

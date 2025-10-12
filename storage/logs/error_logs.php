@@ -164,3 +164,131 @@ Stack trace:
 #1 C:\xampp\htdocs\rentify\public\index.php(23): App->__construct()
 #2 {main}
   thrown in C:\xampp\htdocs\rentify\app\core\App.php on line 61
+[12-Oct-2025 19:58:00 Europe/Berlin] PHP Fatal error:  Uncaught Exception: Method (main.js) doesn't exists in C:\xampp\htdocs\rentify\app\core\App.php:61
+Stack trace:
+#0 C:\xampp\htdocs\rentify\app\core\App.php(36): App->loadController()
+#1 C:\xampp\htdocs\rentify\public\index.php(23): App->__construct()
+#2 {main}
+  thrown in C:\xampp\htdocs\rentify\app\core\App.php on line 61
+[12-Oct-2025 19:58:10 Europe/Berlin] PHP Fatal error:  Uncaught Exception: Method (main.js) doesn't exists in C:\xampp\htdocs\rentify\app\core\App.php:61
+Stack trace:
+#0 C:\xampp\htdocs\rentify\app\core\App.php(36): App->loadController()
+#1 C:\xampp\htdocs\rentify\public\index.php(23): App->__construct()
+#2 {main}
+  thrown in C:\xampp\htdocs\rentify\app\core\App.php on line 61
+[12-Oct-2025 19:58:21 Europe/Berlin] Successful login for user ID: 1
+[12-Oct-2025 19:58:21 Europe/Berlin] PHP Fatal error:  Uncaught Exception: Method (main.js) doesn't exists in C:\xampp\htdocs\rentify\app\core\App.php:61
+Stack trace:
+#0 C:\xampp\htdocs\rentify\app\core\App.php(36): App->loadController()
+#1 C:\xampp\htdocs\rentify\public\index.php(23): App->__construct()
+#2 {main}
+  thrown in C:\xampp\htdocs\rentify\app\core\App.php on line 61
+[12-Oct-2025 19:59:23 Europe/Berlin] PHP Fatal error:  Uncaught Exception: Method (main.js) doesn't exists in C:\xampp\htdocs\rentify\app\core\App.php:61
+Stack trace:
+#0 C:\xampp\htdocs\rentify\app\core\App.php(36): App->loadController()
+#1 C:\xampp\htdocs\rentify\public\index.php(23): App->__construct()
+#2 {main}
+  thrown in C:\xampp\htdocs\rentify\app\core\App.php on line 61
+[12-Oct-2025 20:03:27 Europe/Berlin] PHP Fatal error:  Uncaught Exception: Method (main.js) doesn't exists in C:\xampp\htdocs\rentify\app\core\App.php:61
+Stack trace:
+#0 C:\xampp\htdocs\rentify\app\core\App.php(36): App->loadController()
+#1 C:\xampp\htdocs\rentify\public\index.php(23): App->__construct()
+#2 {main}
+  thrown in C:\xampp\htdocs\rentify\app\core\App.php on line 61
+[12-Oct-2025 20:04:43 Europe/Berlin] PHP Fatal error:  Uncaught Exception: Method (main.js) doesn't exists in C:\xampp\htdocs\rentify\app\core\App.php:61
+Stack trace:
+#0 C:\xampp\htdocs\rentify\app\core\App.php(36): App->loadController()
+#1 C:\xampp\htdocs\rentify\public\index.php(23): App->__construct()
+#2 {main}
+  thrown in C:\xampp\htdocs\rentify\app\core\App.php on line 61
+[12-Oct-2025 20:05:03 Europe/Berlin] PHP Fatal error:  Uncaught Exception: Method (main.js) doesn't exists in C:\xampp\htdocs\rentify\app\core\App.php:61
+Stack trace:
+#0 C:\xampp\htdocs\rentify\app\core\App.php(36): App->loadController()
+#1 C:\xampp\htdocs\rentify\public\index.php(23): App->__construct()
+#2 {main}
+  thrown in C:\xampp\htdocs\rentify\app\core\App.php on line 61
+[12-Oct-2025 20:05:41 Europe/Berlin] PHP Fatal error:  Uncaught Exception: Method (main.js) doesn't exists in C:\xampp\htdocs\rentify\app\core\App.php:61
+Stack trace:
+#0 C:\xampp\htdocs\rentify\app\core\App.php(36): App->loadController()
+#1 C:\xampp\htdocs\rentify\public\index.php(23): App->__construct()
+#2 {main}
+  thrown in C:\xampp\htdocs\rentify\app\core\App.php on line 61
+[12-Oct-2025 20:10:21 Europe/Berlin] PHP Fatal error:  Uncaught Exception: Method (main.js) doesn't exists in C:\xampp\htdocs\rentify\app\core\App.php:62
+Stack trace:
+#0 C:\xampp\htdocs\rentify\app\core\App.php(37): App->loadController()
+#1 C:\xampp\htdocs\rentify\public\index.php(23): App->__construct()
+#2 {main}
+  thrown in C:\xampp\htdocs\rentify\app\core\App.php on line 62
+[12-Oct-2025 20:10:54 Europe/Berlin] PHP Fatal error:  Uncaught Exception: Method (main.js) doesn't exists in C:\xampp\htdocs\rentify\app\core\App.php:62
+Stack trace:
+#0 C:\xampp\htdocs\rentify\app\core\App.php(37): App->loadController()
+#1 C:\xampp\htdocs\rentify\public\index.php(23): App->__construct()
+#2 {main}
+  thrown in C:\xampp\htdocs\rentify\app\core\App.php on line 62
+[12-Oct-2025 20:11:12 Europe/Berlin] PHP Fatal error:  Uncaught Exception: Method (main.js) doesn't exists in C:\xampp\htdocs\rentify\app\core\App.php:62
+Stack trace:
+#0 C:\xampp\htdocs\rentify\app\core\App.php(37): App->loadController()
+#1 C:\xampp\htdocs\rentify\public\index.php(23): App->__construct()
+#2 {main}
+  thrown in C:\xampp\htdocs\rentify\app\core\App.php on line 62
+[12-Oct-2025 20:16:45 Europe/Berlin] PHP Fatal error:  Uncaught Exception: Method (main.js) doesn't exists in C:\xampp\htdocs\rentify\app\core\App.php:62
+Stack trace:
+#0 C:\xampp\htdocs\rentify\app\core\App.php(37): App->loadController()
+#1 C:\xampp\htdocs\rentify\public\index.php(23): App->__construct()
+#2 {main}
+  thrown in C:\xampp\htdocs\rentify\app\core\App.php on line 62
+[12-Oct-2025 20:16:51 Europe/Berlin] PHP Fatal error:  Uncaught Exception: Method (main.js) doesn't exists in C:\xampp\htdocs\rentify\app\core\App.php:62
+Stack trace:
+#0 C:\xampp\htdocs\rentify\app\core\App.php(37): App->loadController()
+#1 C:\xampp\htdocs\rentify\public\index.php(23): App->__construct()
+#2 {main}
+  thrown in C:\xampp\htdocs\rentify\app\core\App.php on line 62
+[12-Oct-2025 20:25:22 Europe/Berlin] PHP Fatal error:  Uncaught Exception: Method (main.js) doesn't exists in C:\xampp\htdocs\rentify\app\core\App.php:62
+Stack trace:
+#0 C:\xampp\htdocs\rentify\app\core\App.php(37): App->loadController()
+#1 C:\xampp\htdocs\rentify\public\index.php(23): App->__construct()
+#2 {main}
+  thrown in C:\xampp\htdocs\rentify\app\core\App.php on line 62
+[12-Oct-2025 20:30:14 Europe/Berlin] PHP Fatal error:  Uncaught Exception: Method (cat-pfp.jpg) doesn't exists in C:\xampp\htdocs\rentify\app\core\App.php:62
+Stack trace:
+#0 C:\xampp\htdocs\rentify\app\core\App.php(37): App->loadController()
+#1 C:\xampp\htdocs\rentify\public\index.php(23): App->__construct()
+#2 {main}
+  thrown in C:\xampp\htdocs\rentify\app\core\App.php on line 62
+[12-Oct-2025 20:36:24 Europe/Berlin] PHP Fatal error:  Uncaught Exception: Method (main.js) doesn't exists in C:\xampp\htdocs\rentify\app\core\App.php:62
+Stack trace:
+#0 C:\xampp\htdocs\rentify\app\core\App.php(37): App->loadController()
+#1 C:\xampp\htdocs\rentify\public\index.php(23): App->__construct()
+#2 {main}
+  thrown in C:\xampp\htdocs\rentify\app\core\App.php on line 62
+[12-Oct-2025 20:36:37 Europe/Berlin] PHP Fatal error:  Uncaught Exception: Method (main.js) doesn't exists in C:\xampp\htdocs\rentify\app\core\App.php:62
+Stack trace:
+#0 C:\xampp\htdocs\rentify\app\core\App.php(37): App->loadController()
+#1 C:\xampp\htdocs\rentify\public\index.php(23): App->__construct()
+#2 {main}
+  thrown in C:\xampp\htdocs\rentify\app\core\App.php on line 62
+[12-Oct-2025 20:36:45 Europe/Berlin] Successful login for user ID: 1
+[12-Oct-2025 20:36:45 Europe/Berlin] PHP Fatal error:  Uncaught Exception: Method (main.js) doesn't exists in C:\xampp\htdocs\rentify\app\core\App.php:62
+Stack trace:
+#0 C:\xampp\htdocs\rentify\app\core\App.php(37): App->loadController()
+#1 C:\xampp\htdocs\rentify\public\index.php(23): App->__construct()
+#2 {main}
+  thrown in C:\xampp\htdocs\rentify\app\core\App.php on line 62
+[12-Oct-2025 20:44:19 Europe/Berlin] PHP Fatal error:  Uncaught Exception: Method (main.js) doesn't exists in C:\xampp\htdocs\rentify\app\core\App.php:62
+Stack trace:
+#0 C:\xampp\htdocs\rentify\app\core\App.php(37): App->loadController()
+#1 C:\xampp\htdocs\rentify\public\index.php(23): App->__construct()
+#2 {main}
+  thrown in C:\xampp\htdocs\rentify\app\core\App.php on line 62
+[12-Oct-2025 20:44:21 Europe/Berlin] PHP Fatal error:  Uncaught Exception: Method (main.js) doesn't exists in C:\xampp\htdocs\rentify\app\core\App.php:62
+Stack trace:
+#0 C:\xampp\htdocs\rentify\app\core\App.php(37): App->loadController()
+#1 C:\xampp\htdocs\rentify\public\index.php(23): App->__construct()
+#2 {main}
+  thrown in C:\xampp\htdocs\rentify\app\core\App.php on line 62
+[12-Oct-2025 20:44:22 Europe/Berlin] PHP Fatal error:  Uncaught Exception: Method (main.js) doesn't exists in C:\xampp\htdocs\rentify\app\core\App.php:62
+Stack trace:
+#0 C:\xampp\htdocs\rentify\app\core\App.php(37): App->loadController()
+#1 C:\xampp\htdocs\rentify\public\index.php(23): App->__construct()
+#2 {main}
+  thrown in C:\xampp\htdocs\rentify\app\core\App.php on line 62

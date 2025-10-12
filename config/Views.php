@@ -30,6 +30,7 @@ class Views {
   
   // ==================== USERS ====================
   const USER_DASHBOARD = 'pages/user_dashboard';
+  const USER_PROFILE = 'pages/profile';
 
   // ==================== LAYOUTS ====================
   const SUCCESS_SIGNUP = 'layouts/success_signup';
