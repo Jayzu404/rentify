@@ -1,1 +1,2 @@
-ENTREP FINAL REQUIRMENT (under development)
+ENTREP FINAL ACTIVITY (under development)
+
