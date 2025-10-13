@@ -41,12 +41,24 @@ CREATE TABLE items (
   brand VARCHAR(25),
   location VARCHAR(150),
   item_condition ENUM('brand_new', 'like_new', 'good', 'fair', 'poor') NOT NULL DEFAULT 'good',
-  image_path VARCHAR(255) NOT NULL,
   status ENUM('available', 'unavailable', 'maintenance') DEFAULT 'available',
   created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (owner_uid) REFERENCES users(uid) ON DELETE CASCADE
 );
+
+-- ===============================
+-- ITEM IMAGES
+-- ===============================
+CREATE TABLE item_images (
+  image_id INT AUTO_INCREMENT PRIMARY KEY,
+  item_id INT NOT NULL,
+  image_path VARCHAR(255) NOT NULL,
+  is_primary BOOLEAN DEFAULT FALSE,
+  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (item_id) REFERENCES items(item_id) ON DELETE CASCADE
+);
+
 
 -- ===============================
 -- RENTAL PRICING

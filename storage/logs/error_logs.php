@@ -292,3 +292,101 @@ Stack trace:
 #1 C:\xampp\htdocs\rentify\public\index.php(23): App->__construct()
 #2 {main}
   thrown in C:\xampp\htdocs\rentify\app\core\App.php on line 62
+[12-Oct-2025 20:48:39 Europe/Berlin] PHP Fatal error:  Uncaught Exception: Method (main.js) doesn't exists in C:\xampp\htdocs\rentify\app\core\App.php:62
+Stack trace:
+#0 C:\xampp\htdocs\rentify\app\core\App.php(37): App->loadController()
+#1 C:\xampp\htdocs\rentify\public\index.php(23): App->__construct()
+#2 {main}
+  thrown in C:\xampp\htdocs\rentify\app\core\App.php on line 62
+[13-Oct-2025 04:37:51 Europe/Berlin] PHP Fatal error:  Uncaught Exception: Method (main.js) doesn't exists in C:\xampp\htdocs\rentify\app\core\App.php:62
+Stack trace:
+#0 C:\xampp\htdocs\rentify\app\core\App.php(37): App->loadController()
+#1 C:\xampp\htdocs\rentify\public\index.php(23): App->__construct()
+#2 {main}
+  thrown in C:\xampp\htdocs\rentify\app\core\App.php on line 62
+[13-Oct-2025 04:38:08 Europe/Berlin] Connection error: SQLSTATE[HY000] [2002] No connection could be made because the target machine actively refused it
+[13-Oct-2025 04:38:08 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to a member function prepare() on null in C:\xampp\htdocs\rentify\app\models\AuthModel.php:142
+Stack trace:
+#0 C:\xampp\htdocs\rentify\app\controllers\AuthController.php(81): AuthModel->authenticateUser('user@gmail.com', '123')
+#1 C:\xampp\htdocs\rentify\app\core\App.php(67): AuthController->authLogin()
+#2 C:\xampp\htdocs\rentify\app\core\App.php(37): App->loadController()
+#3 C:\xampp\htdocs\rentify\public\index.php(23): App->__construct()
+#4 {main}
+  thrown in C:\xampp\htdocs\rentify\app\models\AuthModel.php on line 142
+[13-Oct-2025 04:38:51 Europe/Berlin] PHP Fatal error:  Uncaught Exception: Method (main.js) doesn't exists in C:\xampp\htdocs\rentify\app\core\App.php:62
+Stack trace:
+#0 C:\xampp\htdocs\rentify\app\core\App.php(37): App->loadController()
+#1 C:\xampp\htdocs\rentify\public\index.php(23): App->__construct()
+#2 {main}
+  thrown in C:\xampp\htdocs\rentify\app\core\App.php on line 62
+[13-Oct-2025 04:38:56 Europe/Berlin] Successful login for user ID: 1
+[13-Oct-2025 04:38:56 Europe/Berlin] PHP Fatal error:  Uncaught Exception: Method (main.js) doesn't exists in C:\xampp\htdocs\rentify\app\core\App.php:62
+Stack trace:
+#0 C:\xampp\htdocs\rentify\app\core\App.php(37): App->loadController()
+#1 C:\xampp\htdocs\rentify\public\index.php(23): App->__construct()
+#2 {main}
+  thrown in C:\xampp\htdocs\rentify\app\core\App.php on line 62
+[13-Oct-2025 05:37:30 Europe/Berlin] PHP Warning:  require_once(C:\xampp\htdocs\rentify\app/model/ItemModel.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\rentify\app\controllers\ItemController.php on line 7
+[13-Oct-2025 05:37:30 Europe/Berlin] PHP Fatal error:  Uncaught Error: Failed opening required 'C:\xampp\htdocs\rentify\app/model/ItemModel.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\rentify\app\controllers\ItemController.php:7
+Stack trace:
+#0 C:\xampp\htdocs\rentify\app\core\App.php(55): require_once()
+#1 C:\xampp\htdocs\rentify\app\core\App.php(37): App->loadController()
+#2 C:\xampp\htdocs\rentify\public\index.php(23): App->__construct()
+#3 {main}
+  thrown in C:\xampp\htdocs\rentify\app\controllers\ItemController.php on line 7
+[13-Oct-2025 05:37:32 Europe/Berlin] PHP Warning:  require_once(C:\xampp\htdocs\rentify\app/model/ItemModel.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\rentify\app\controllers\ItemController.php on line 7
+[13-Oct-2025 05:37:32 Europe/Berlin] PHP Fatal error:  Uncaught Error: Failed opening required 'C:\xampp\htdocs\rentify\app/model/ItemModel.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\rentify\app\controllers\ItemController.php:7
+Stack trace:
+#0 C:\xampp\htdocs\rentify\app\core\App.php(55): require_once()
+#1 C:\xampp\htdocs\rentify\app\core\App.php(37): App->loadController()
+#2 C:\xampp\htdocs\rentify\public\index.php(23): App->__construct()
+#3 {main}
+  thrown in C:\xampp\htdocs\rentify\app\controllers\ItemController.php on line 7
+[13-Oct-2025 05:37:33 Europe/Berlin] PHP Warning:  require_once(C:\xampp\htdocs\rentify\app/model/ItemModel.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\rentify\app\controllers\ItemController.php on line 7
+[13-Oct-2025 05:37:33 Europe/Berlin] PHP Fatal error:  Uncaught Error: Failed opening required 'C:\xampp\htdocs\rentify\app/model/ItemModel.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\rentify\app\controllers\ItemController.php:7
+Stack trace:
+#0 C:\xampp\htdocs\rentify\app\core\App.php(55): require_once()
+#1 C:\xampp\htdocs\rentify\app\core\App.php(37): App->loadController()
+#2 C:\xampp\htdocs\rentify\public\index.php(23): App->__construct()
+#3 {main}
+  thrown in C:\xampp\htdocs\rentify\app\controllers\ItemController.php on line 7
+[13-Oct-2025 05:37:33 Europe/Berlin] PHP Warning:  require_once(C:\xampp\htdocs\rentify\app/model/ItemModel.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\rentify\app\controllers\ItemController.php on line 7
+[13-Oct-2025 05:37:33 Europe/Berlin] PHP Fatal error:  Uncaught Error: Failed opening required 'C:\xampp\htdocs\rentify\app/model/ItemModel.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\rentify\app\controllers\ItemController.php:7
+Stack trace:
+#0 C:\xampp\htdocs\rentify\app\core\App.php(55): require_once()
+#1 C:\xampp\htdocs\rentify\app\core\App.php(37): App->loadController()
+#2 C:\xampp\htdocs\rentify\public\index.php(23): App->__construct()
+#3 {main}
+  thrown in C:\xampp\htdocs\rentify\app\controllers\ItemController.php on line 7
+[13-Oct-2025 05:37:33 Europe/Berlin] PHP Warning:  require_once(C:\xampp\htdocs\rentify\app/model/ItemModel.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\rentify\app\controllers\ItemController.php on line 7
+[13-Oct-2025 05:37:33 Europe/Berlin] PHP Fatal error:  Uncaught Error: Failed opening required 'C:\xampp\htdocs\rentify\app/model/ItemModel.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\rentify\app\controllers\ItemController.php:7
+Stack trace:
+#0 C:\xampp\htdocs\rentify\app\core\App.php(55): require_once()
+#1 C:\xampp\htdocs\rentify\app\core\App.php(37): App->loadController()
+#2 C:\xampp\htdocs\rentify\public\index.php(23): App->__construct()
+#3 {main}
+  thrown in C:\xampp\htdocs\rentify\app\controllers\ItemController.php on line 7
+[13-Oct-2025 05:37:33 Europe/Berlin] PHP Warning:  require_once(C:\xampp\htdocs\rentify\app/model/ItemModel.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\rentify\app\controllers\ItemController.php on line 7
+[13-Oct-2025 05:37:33 Europe/Berlin] PHP Fatal error:  Uncaught Error: Failed opening required 'C:\xampp\htdocs\rentify\app/model/ItemModel.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\rentify\app\controllers\ItemController.php:7
+Stack trace:
+#0 C:\xampp\htdocs\rentify\app\core\App.php(55): require_once()
+#1 C:\xampp\htdocs\rentify\app\core\App.php(37): App->loadController()
+#2 C:\xampp\htdocs\rentify\public\index.php(23): App->__construct()
+#3 {main}
+  thrown in C:\xampp\htdocs\rentify\app\controllers\ItemController.php on line 7
+[13-Oct-2025 05:37:33 Europe/Berlin] PHP Warning:  require_once(C:\xampp\htdocs\rentify\app/model/ItemModel.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\rentify\app\controllers\ItemController.php on line 7
+[13-Oct-2025 05:37:33 Europe/Berlin] PHP Fatal error:  Uncaught Error: Failed opening required 'C:\xampp\htdocs\rentify\app/model/ItemModel.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\rentify\app\controllers\ItemController.php:7
+Stack trace:
+#0 C:\xampp\htdocs\rentify\app\core\App.php(55): require_once()
+#1 C:\xampp\htdocs\rentify\app\core\App.php(37): App->loadController()
+#2 C:\xampp\htdocs\rentify\public\index.php(23): App->__construct()
+#3 {main}
+  thrown in C:\xampp\htdocs\rentify\app\controllers\ItemController.php on line 7
+[13-Oct-2025 05:37:34 Europe/Berlin] PHP Warning:  require_once(C:\xampp\htdocs\rentify\app/model/ItemModel.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\rentify\app\controllers\ItemController.php on line 7
+[13-Oct-2025 05:37:34 Europe/Berlin] PHP Fatal error:  Uncaught Error: Failed opening required 'C:\xampp\htdocs\rentify\app/model/ItemModel.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\rentify\app\controllers\ItemController.php:7
+Stack trace:
+#0 C:\xampp\htdocs\rentify\app\core\App.php(55): require_once()
+#1 C:\xampp\htdocs\rentify\app\core\App.php(37): App->loadController()
+#2 C:\xampp\htdocs\rentify\public\index.php(23): App->__construct()
+#3 {main}
+  thrown in C:\xampp\htdocs\rentify\app\controllers\ItemController.php on line 7

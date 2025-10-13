@@ -4,6 +4,7 @@ require_once dirname(__DIR__) . '/core/Controller.php';
 require_once dirname(__DIR__,2) . '/config/Views.php';
 require_once dirname(__DIR__) . '/helpers/Sanitizer.php';
 require_once dirname(__DIR__) . '/helpers/ItemListingValidator.php';
+require_once dirname(__DIR__) . '/models/ItemModel.php';
 
 class ItemController extends Controller {
   public function browse(){
@@ -24,11 +25,11 @@ class ItemController extends Controller {
     //   echo '<br>';
     // }
 
-    echo '<pre>';
-    var_dump($_FILES);
-    echo '<pre>';
+    // echo '<pre>';
+    // var_dump($_FILES);
+    // echo '<pre>';
 
-    if($_SERVER['REQUEST_METHOD'] === 'GET'){
+    if($_SERVER['REQUEST_METHOD'] === 'POST'){
       if(session_status() !== PHP_SESSION_ACTIVE){
         session_start();
       }
@@ -39,14 +40,27 @@ class ItemController extends Controller {
 
       $validation = $this->validateInputs($sanitizedInputs);
       
-      if(!$validation['valid']){
-        $_SESSION['errors'] = $validation['errors'];
-        header('Location: /item/create');
-        exit;
-      }
+      // if(!$validation['valid']){
+      //   $_SESSION['errors'] = $validation['errors'];
+      //   header('Location: /item/create');
+      //   exit;
+      // }
 
+      $itemModel = new ItemModel();
 
+      $itemModel->createItem(
+        1,
+        $sanitizedInputs['itemName'],
+        $sanitizedInputs['description'],
+        $sanitizedInputs['pickUpLocation'],
+        $sanitizedInputs['itemCondition']
+      );
 
+      /*
+        TODO: FINISH THE CONTROLLER AND MODEL
+              DYNAMIC ID MUST BE SEND
+              ITEMS RELATED TABLE MUST BE CONNECTED
+      */
     }
     
 
