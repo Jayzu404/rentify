@@ -1,4 +1,7 @@
-CREATE DATABASE rentify_db;
+-- ===============================
+-- CREATE DATABASE
+-- ===============================
+CREATE DATABASE IF NOT EXISTS rentify_db;
 
 USE rentify_db;
 
@@ -38,12 +41,16 @@ CREATE TABLE items (
   owner_uid INT NOT NULL,
   title VARCHAR(150) NOT NULL,
   description TEXT,
+  category ENUM('pe_costume', 'sports_gear', 'textbook', 'uniform', 'lab_equipment', 'electronics', 'other') NOT NULL,
+  quantity INT NOT NULL DEFAULT 1,
   brand VARCHAR(25),
   location VARCHAR(150),
   item_condition ENUM('brand_new', 'like_new', 'good', 'fair', 'poor') NOT NULL DEFAULT 'good',
+  return_statement TEXT,
+  security_deposit DECIMAL(10,2) DEFAULT NULL,
   status ENUM('available', 'unavailable', 'maintenance') DEFAULT 'available',
   created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   FOREIGN KEY (owner_uid) REFERENCES users(uid) ON DELETE CASCADE
 );
 
@@ -59,16 +66,18 @@ CREATE TABLE item_images (
   FOREIGN KEY (item_id) REFERENCES items(item_id) ON DELETE CASCADE
 );
 
-
 -- ===============================
 -- RENTAL PRICING
 -- ===============================
 CREATE TABLE rental_pricing (
   pricing_id INT AUTO_INCREMENT PRIMARY KEY,
   item_id INT NOT NULL,
-  rate_type ENUM('per_day', 'per_week') NOT NULL,
+  rate_type ENUM('per_day', 'per_week', 'per_month') NOT NULL,
   price DECIMAL(10,2) NOT NULL,
   minimum_duration INT NOT NULL,
+  minimum_duration_unit ENUM('day', 'week', 'month') NOT NULL DEFAULT 'day',
+  maximum_duration INT DEFAULT NULL,
+  maximum_duration_unit ENUM('day', 'week', 'month') DEFAULT NULL,
   FOREIGN KEY (item_id) REFERENCES items(item_id) ON DELETE CASCADE
 );
 
@@ -79,7 +88,7 @@ CREATE TABLE item_availability (
   availability_id INT AUTO_INCREMENT PRIMARY KEY,
   item_id INT NOT NULL,
   available_from DATE NOT NULL,
-  available_until DATE NOT NULL,
+  available_until DATE NULL,
   FOREIGN KEY (item_id) REFERENCES items(item_id) ON DELETE CASCADE
 );
 
@@ -88,10 +97,18 @@ CREATE TABLE item_availability (
 -- ===============================
 CREATE TABLE cancellation_policies (
   policy_id INT AUTO_INCREMENT PRIMARY KEY,
-  name VARCHAR(100) NOT NULL,
+  name VARCHAR(100) NOT NULL UNIQUE,
   description TEXT,
   refund_percentage DECIMAL(5,2) NOT NULL CHECK (refund_percentage BETWEEN 0 AND 100)
 );
+
+-- ===============================
+-- INSERT PREDEFINED CANCELLATION POLICIES
+-- ===============================
+INSERT INTO cancellation_policies (name, description, refund_percentage) VALUES
+('flexible', 'Flexible - Full refund up to 24hrs before', 100.00),
+('moderate', 'Moderate - 50% refund up to 48hrs before', 50.00),
+('strict', 'Strict - No refunds', 0.00);
 
 -- ===============================
 -- RENTALS (bookings)

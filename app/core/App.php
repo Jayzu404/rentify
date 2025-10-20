@@ -4,7 +4,7 @@ require_once dirname(__DIR__,2) . '/config/config.php';
 
 class App {
   private $controller = "HomeController";
-  private String $method = "index";
+  private string $method = "index";
   private $params = [];
 
   private $allowedControllers = [
@@ -12,7 +12,8 @@ class App {
     'auth'      => 'AuthController',
     'item'      => 'ItemController',
     'dashboard' => 'DashboardController',
-    'user'      => 'UserController'
+    'user'      => 'UserController',
+    'file'      => 'FileController'
   ];
 
   public function __construct()

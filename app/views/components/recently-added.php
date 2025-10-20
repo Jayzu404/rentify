@@ -1,5 +1,4 @@
 <link rel="stylesheet" href="/assets/styles/browse-items.css">
-
 <div class="container py-5">
   <div class="row g-4">
 

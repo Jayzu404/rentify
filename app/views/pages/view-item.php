@@ -4,52 +4,53 @@
     session_start();
   }
 
-  // TODO: Replace with actual database query
-  // This should fetch item by ID from URL parameter
-  // Example: $itemId = $_GET['id'] ?? null;
+  $rawItem = $data['item'] ?? null;
+
+  if(!$item) {
+    header('Location: /item/browse');
+    exit;
+  }
   
   $item = [
-    'id' => 1,
-    'name' => 'Professional DSLR Camera',
-    'category' => 'electronics',
-    'category_display' => 'Electronics',
-    'brand' => 'Canon EOS 2000D',
-    'condition' => 'good',
-    'condition_display' => 'Good',
-    'quantity' => 1,
-    'quantity_available' => 1,
-    'rental_price' => 450.00,
-    'price_rate' => 'day',
-    'security_deposit' => 1000.00,
-    'min_duration' => 1,
-    'min_duration_unit' => 'day',
-    'max_duration' => 7,
-    'max_duration_unit' => 'day',
-    'available_from' => '2025-10-12',
-    'available_until' => '2025-12-31',
-    'pickup_location' => 'Main Campus, STCS 2nd floor',
-    'description' => 'A Canon DSLR with 18-55mm lens, perfect for photography and videography projects. Includes camera bag, strap, charger, and extra battery. Well-maintained and regularly cleaned. Ideal for student projects, events, or personal use.',
-    'return_statement' => 'Item must be returned in the same condition as received. All accessories must be returned. Any damage beyond normal wear will be deducted from the security deposit.',
-    'cancellation_policy' => 'flexible',
+    'id' => $rawItem['item_id'],
+    'name' => $rawItem['title'],
+    'category' => $rawItem['category'],
+    'category_display' => ucfirst($rawItem['category']),
+    'brand' => $rawItem['brand'] ?? null,
+    'condition' => $rawItem['item_condition'],
+    'condition_display' => ucfirst($rawItem['item_condition']),
+    'quantity' => $rawItem['quantity'],
+    'quantity_available' => $rawItem['quantity'],
+    'rental_price' => (float)$rawItem['price'],
+    'price_rate' => $rawItem['rate_type'],
+    'security_deposit' => (float)($rawItem['security_deposit'] ?? 0),
+    'min_duration' => (int)$rawItem['minimum_duration'],
+    'min_duration_unit' => $rawItem['minimum_duration_unit'],
+    'max_duration' => $rawItem['maximum_duration'] ? (int)$rawItem['maximum_duration'] : null,
+    'max_duration_unit' => $rawItem['maximum_duration_unit'] ?? null,
+    'available_from' => $rawItem['available_from'],
+    'available_until' => $rawItem['available_until'],
+    'pickup_location' => $rawItem['location'],
+    'description' => $rawItem['description'],
+    'return_statement' => $rawItem['return_statement'] ?? 'Item must be returned in the same condition.',
+    'cancellation_policy' => $rawItem['cancellation_policy'] ?? 'flexible',
     'cancellation_display' => 'Flexible - Full refund up to 24hrs before',
-    'status' => 'available', // available, rented, unavailable
-    'images' => [
-      'https://images.unsplash.com/photo-1504208434309-cb69f4fe52b0?w=800',
-      'https://images.unsplash.com/photo-1519681393784-d120267933ba?w=800',
-      'https://images.unsplash.com/photo-1519681393784-d120267933ba?w=800'
-    ],
+    'status' => $rawItem['status'],
+    'images' => array_map(function($img) {
+      return $img['path'];
+    }, $rawItem['images']),
     'owner' => [
-      'id' => 123,
-      'name' => 'Juan Dela Cruz',
-      'avatar' => 'https://ui-avatars.com/api/?name=Juan+Dela+Cruz&background=c88a05&color=fff&size=200',
-      'member_since' => '2024-08-15',
+      'id' => $rawItem['owner_uid'],
+      'name' => $rawItem['first_name'] . ' ' . $rawItem['last_name'],
+      'avatar' => 'https://ui-avatars.com/api/?name=' . urlencode($rawItem['first_name'] . '+' . $rawItem['last_name']) . '&background=c88a05&color=fff&size=200',
+      'member_since' => $rawItem['created_at'] ?? '2024-08-15',
       'verified' => true,
       'rating' => 4.8,
       'total_rentals' => 24
     ],
-    'date_posted' => '2025-10-05',
-    'last_updated' => '2025-10-10',
-    'views' => 145
+    'date_posted' => $rawItem['created_at'],
+    'last_updated' => $rawItem['updated_at'] ?? $rawItem['created_at'],
+    'views' => 0
   ];
 
   // Check if current user is the owner
@@ -685,26 +686,28 @@
       }
 
       .action-section {
+        position: static;
+        margin-top: 24px;
+      }
+
+      /* Mobile sticky bottom bar for primary action */
+      .mobile-action-bar {
         position: fixed;
         bottom: 0;
         left: 0;
         right: 0;
         background: #ffffff;
         border-top: 1px solid #e5e7eb;
-        padding: 16px 24px;
+        padding: 12px 16px;
         box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
         z-index: 90;
-      }
-
-      .card.action-section {
-        border-radius: 0;
-        border-left: none;
-        border-right: none;
-        border-bottom: none;
+        display: flex;
+        gap: 12px;
+        align-items: center;
       }
 
       body {
-        padding-bottom: 100px;
+        padding-bottom: 80px;
       }
 
       .main-image-container {
@@ -722,6 +725,14 @@
       .info-item {
         grid-template-columns: 120px 1fr;
         gap: 8px;
+      }
+
+      .owner-meta {
+        font-size: 12px;
+      }
+
+      .deposit-info {
+        font-size: 13px;
       }
     }
 
@@ -756,6 +767,7 @@
 
       .thumbnail-gallery {
         grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+        padding: 12px;
       }
 
       .header-btn span {
@@ -765,6 +777,41 @@
       .info-item {
         grid-template-columns: 1fr;
         gap: 4px;
+      }
+
+      .owner-section {
+        flex-direction: column;
+        text-align: center;
+        gap: 12px;
+      }
+
+      .owner-meta {
+        flex-direction: column;
+        gap: 4px;
+      }
+
+      .meta-divider {
+        display: none;
+      }
+
+      .item-meta {
+        font-size: 13px;
+      }
+
+      .duration-info {
+        font-size: 12px;
+      }
+
+      .availability-section {
+        padding: 12px;
+      }
+
+      .policy-item {
+        padding: 12px;
+      }
+
+      body {
+        padding-bottom: 75px;
       }
     }
   </style>
@@ -800,7 +847,7 @@
         <!-- Image Gallery -->
         <div class="gallery-section">
           <div class="main-image-container">
-            <img id="mainImage" src="<?= htmlspecialchars($item['images'][0]) ?>" alt="<?= htmlspecialchars($item['name']) ?>" class="main-image">
+            <img id="mainImage" src="<?= '/file/image' . htmlspecialchars($item['images'][0]) ?>" alt="<?= htmlspecialchars($item['name']) ?>" class="main-image">
             <span class="status-badge status-<?= htmlspecialchars($item['status']) ?>">
               <?= ucfirst($item['status']) ?>
             </span>
@@ -997,7 +1044,7 @@
             </div>
           </div>
 
-          <?php if (false): ?>
+          <?php if (true): ?>
             <!-- Owner Actions -->
             <div class="owner-actions" style="margin-top: 24px;">
               <a href="/item/edit/<?= $item['id'] ?>" class="btn btn-primary">

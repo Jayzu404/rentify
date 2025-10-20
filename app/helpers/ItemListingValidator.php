@@ -180,6 +180,121 @@ class ItemListingValidator {
       'errors' => $errors
     ];
   }
+
+  /**
+   * Validate uploaded images
+   * 
+   * @param array<int, array{name: string, type: string, size: int, tmp_name: string, error: int}> $files
+   * @return array{valid: bool, errors: array<int|string, string>}
+   */
+  public static function validateItemImages(array $files): array {
+  $errors = [];
+  
+  // Check if files array is empty or not properly structured
+  if (empty($files) || !isset($files['name']) || !is_array($files['name'])) {
+    $errors['itemImages'] = 'At least one image is required';
+    return [
+      'valid' => false,
+      'errors' => $errors
+    ];
+  }
+  
+  // Count actual uploaded files (excluding empty slots)
+  $uploadedCount = 0;
+  foreach ($files['error'] as $error) {
+    if ($error !== UPLOAD_ERR_NO_FILE) {
+      $uploadedCount++;
+    }
+  }
+  
+  // At least 1 image required, maximum 5 images
+  if ($uploadedCount === 0) {
+    $errors['itemImages'] = 'At least one image is required';
+    return [
+      'valid' => false,
+      'errors' => $errors
+    ];
+  }
+  
+  if ($uploadedCount > 5) {
+    $errors['itemImages'] = 'Maximum 5 images allowed';
+    return [
+      'valid' => false,
+      'errors' => $errors
+    ];
+  }
+  
+  // Validate each uploaded file
+  $allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
+  $allowedExtensions = ['jpg', 'jpeg', 'png', 'webp'];
+  $maxFileSize = 5 * 1024 * 1024; // 5MB in bytes
+  
+  for ($i = 0; $i < count($files['name']); $i++) {
+    // Skip if no file uploaded in this slot
+    if ($files['error'][$i] === UPLOAD_ERR_NO_FILE) {
+      continue;
+    }
+    
+    // Check for upload errors
+    if ($files['error'][$i] !== UPLOAD_ERR_OK) {
+      $errors["itemImages_$i"] = self::getUploadErrorMessage($files['error'][$i]);
+      continue;
+    }
+    
+    // Validate file type by MIME type
+    if (!in_array($files['type'][$i], $allowedTypes, true)) {
+      $errors["itemImages_$i"] = 'Image must be JPEG, PNG, or WebP format';
+      continue;
+    }
+    
+    // Validate file extension
+    $extension = strtolower(pathinfo($files['name'][$i], PATHINFO_EXTENSION));
+    if (!in_array($extension, $allowedExtensions, true)) {
+      $errors["itemImages_$i"] = 'Invalid file extension. Allowed: jpg, jpeg, png, webp';
+      continue;
+    }
+    
+    // Validate file size
+    if ($files['size'][$i] > $maxFileSize) {
+      $errors["itemImages_$i"] = 'Image size must not exceed 5MB';
+      continue;
+    }
+    
+    // Validate that it's actually an image
+    if (!empty($files['tmp_name'][$i]) && is_uploaded_file($files['tmp_name'][$i])) {
+      $imageInfo = @getimagesize($files['tmp_name'][$i]);
+      if ($imageInfo === false) {
+        $errors["itemImages_$i"] = 'File is not a valid image';
+        continue;
+      }
+      
+      // Additional MIME type verification from actual file content
+      if (!in_array($imageInfo['mime'], $allowedTypes, true)) {
+        $errors["itemImages_$i"] = 'Invalid image type detected';
+      }
+    }
+  }
+  
+  return [
+    'valid' => empty($errors),
+    'errors' => $errors
+  ];
+}
+
+/**
+ * Get human-readable upload error message
+ */
+private static function getUploadErrorMessage(int $errorCode): string {
+  return match($errorCode) {
+    UPLOAD_ERR_INI_SIZE => 'Image exceeds maximum allowed size',
+    UPLOAD_ERR_FORM_SIZE => 'Image exceeds form maximum size',
+    UPLOAD_ERR_PARTIAL => 'Image was only partially uploaded',
+    UPLOAD_ERR_NO_TMP_DIR => 'Missing temporary folder',
+    UPLOAD_ERR_CANT_WRITE => 'Failed to write image to disk',
+    UPLOAD_ERR_EXTENSION => 'Image upload stopped by extension',
+    default => 'Unknown upload error occurred'
+  };
+}
   
   /**
    * Validate category

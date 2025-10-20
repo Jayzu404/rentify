@@ -661,7 +661,7 @@
             <label>Condition <span class="required">*</span></label>
             <div class="radio-group">
               <div class="radio-option">
-                <input type="radio" name="itemCondition" id="conditionNew" value="new" required>
+                <input type="radio" name="itemCondition" id="conditionNew" value="brand_new">
                 <label for="conditionNew">Brand New</label>
               </div>
               <div class="radio-option">

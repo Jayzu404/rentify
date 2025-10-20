@@ -1,10 +1,23 @@
 <?php
   require_once dirname(__DIR__, 2) . '/config/Views.php';
   require_once dirname(__DIR__) . '/core/Controller.php';
+  require_once dirname(__DIR__) . '/models/ItemModel.php';
   
   class HomeController extends Controller {
+    private ItemModel $itemModel;
+
+    public function __construct()
+    {
+      $this->itemModel = new ItemModel();
+    }
+
     public function index(){
-      $this->view(Views::HOME);
+      $recentItems = $this->itemModel->getRecentItems();
+
+      $data = [
+        'recentItems' => $recentItems
+      ];
+      $this->view(Views::HOME, $data);
     }
 
     public function about(){
