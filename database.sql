@@ -17,7 +17,8 @@ CREATE TABLE users(
   email VARCHAR(50) NOT NULL UNIQUE,
   id_path VARCHAR(255) NOT NULL,
   password VARCHAR(255) NOT NULL,
-  created_at DATETIME NOT NULL
+  approval_status ENUM('pending', 'approved', 'rejected') DEFAULT 'pending',
+  created_at DATETIME NOT NULL,
 );
 
 -- ===============================
@@ -49,9 +50,13 @@ CREATE TABLE items (
   return_statement TEXT,
   security_deposit DECIMAL(10,2) DEFAULT NULL,
   status ENUM('available', 'unavailable', 'maintenance') DEFAULT 'available',
+  approval_status ENUM('pending', 'approved', 'rejected') DEFAULT 'pending',
+  approved_by INT NULL,
+  approved_at DATETIME NULL,
   created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  FOREIGN KEY (owner_uid) REFERENCES users(uid) ON DELETE CASCADE
+  FOREIGN KEY (owner_uid) REFERENCES users(uid) ON DELETE CASCADE,
+  FOREIGN KEY (approved_by) REFERENCES admins(admin_id) ON DELETE SET NULL
 );
 
 -- ===============================

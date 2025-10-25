@@ -1,6 +1,6 @@
 <?php
 if (session_status() !== PHP_SESSION_ACTIVE) {
-    session_start();
+  session_start();
 }
 
 // Normalize current page path
@@ -10,8 +10,8 @@ $current_page = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 <style>
   /* ========= Rentify Navbar Styles ========= */
   .navbar {
-      font-family: 'Poppins', sans-serif;
-      transition: all 0.3s ease;
+    font-family: 'Poppins', sans-serif;
+    transition: all 0.3s ease;
   }
 
   .navbar-brand {
@@ -80,16 +80,16 @@ $current_page = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
   }
 
   .user-avatar img {
-      border-radius: 50%;
-      object-fit: cover;
-      border: 2px solid #1e40af;
-      cursor: pointer;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #1e40af;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
   }
 
   .user-avatar img:hover {
-      transform: scale(1.08);
-      box-shadow: 0 4px 10px rgba(30, 64, 175, 0.3);
+    transform: scale(1.08);
+    box-shadow: 0 4px 10px rgba(30, 64, 175, 0.3);
   }
 </style>
 
@@ -121,7 +121,7 @@ $current_page = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
       <div class="d-flex align-items-center gap-2">
         <?php if (!empty($_SESSION['isLoggedIn'])): ?>
-            <?php if ($current_page === '/home' || $current_page === '/'): ?>
+            <?php if ($current_page === '/home' || $current_page === '/' || $current_page === '/item/browse'): ?>
                 <button type="button" class="btn btn-outline-primary btn-md" onclick="window.location.href='/item/create'">
                 <i class="bi bi-plus-circle"></i> List Item
                 </button>

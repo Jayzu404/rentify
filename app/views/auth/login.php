@@ -21,7 +21,7 @@
 <body>
   <?php if ($_SESSION['successSignup'] ?? false): ?>
     <div class="alert alert-success position-fixed fixed-top text-center" role="alert" style="z-index: 1050;" id="successAlert">
-      Account created successfully!
+      Your account has been created successfully. Your registration is currently pending administrator approval. You will receive an email notification once your account has been reviewed and activated.
     </div>
     <?php unset($_SESSION['successSignup']); ?>
   <?php endif; ?>

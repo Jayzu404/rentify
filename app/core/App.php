@@ -8,6 +8,7 @@ class App {
   private $params = [];
 
   private $allowedControllers = [
+    'admin'     => 'AdminController',
     'home'      => 'HomeController',
     'auth'      => 'AuthController',
     'item'      => 'ItemController',
