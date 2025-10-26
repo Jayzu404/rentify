@@ -139,6 +139,12 @@
             height: calc(100vh - 64px);
         }
 
+        .search-box {
+            position: fixed;
+            top: 70px;
+            z-index: 9999;
+        }
+
         /* Ensure tables are responsive */
         .table-wrapper {
             overflow-x: auto;
@@ -663,7 +669,7 @@
 <body>
     <div class="header">
         <h1>Rentify Admin</h1>
-        <button class="logout-btn" onclick="window.location.href='/auth/login'">Logout</button>
+        <button class="logout-btn" onclick="logout()">Logout</button>
     </div>
 
     <div class="container">
@@ -681,20 +687,20 @@
                 <h2 style="margin-bottom: 1.5rem;">Dashboard Overview</h2>
                 <div class="stats-grid">
                     <div class="stat-card">
-                        <h3>Pending Users</h3>
-                        <div class="number" id="stat-pending-users">0</div>
+                        <h3>Pending User/s</h3>
+                        <div class="number" id="stat-pending-users"><?= htmlspecialchars($data['pendingUsersCount'] ?? 0); ?></div>
                     </div>
                     <div class="stat-card">
-                        <h3>Pending Items</h3>
-                        <div class="number" id="stat-pending-items">0</div>
+                        <h3>Pending Item/s</h3>
+                        <div class="number" id="stat-pending-items"><?= htmlspecialchars($data['pendingItemsCount'] ?? 0); ?></div>
                     </div>
                     <div class="stat-card">
-                        <h3>Total Users</h3>
-                        <div class="number" id="stat-total-users">0</div>
+                        <h3>Total User/s</h3>
+                        <div class="number" id="stat-total-users"><?= htmlspecialchars($data['allUserCount'] ?? 0); ?></div>
                     </div>
                     <div class="stat-card">
-                        <h3>Total Items</h3>
-                        <div class="number" id="stat-total-items">0</div>
+                        <h3>Total Item/s</h3>
+                        <div class="number" id="stat-total-items"><?= htmlspecialchars($data['allItemCount'] ?? 0); ?></div>
                     </div>
                     <div class="stat-card">
                         <h3>Rentify Monthly Commission</h3>
@@ -710,8 +716,9 @@
             <!-- All Users Section -->
             <div id="all-users" class="section">
                 <div class="card">
-                    <h2>All Users</h2>
-                    <input type="text" class="search-bar" placeholder="Search users..." onkeyup="searchTable(this, 'all-users-table')">
+                    <div class="search-box">
+                        <input type="text" class="search-bar" placeholder="Search users..." onkeyup="searchTable(this, 'all-users-table')">
+                    </div>
                     <div class="table-wrapper">
                         <table id="all-users-table">
                             <thead>
@@ -726,7 +733,7 @@
                                 </tr>
                             </thead>
                             <tbody id="all-users-body">
-                                <?php foreach ($data['allUsers'] as $user):?>
+                                <?php foreach ($data['allUser'] as $user):?>
                                     <tr>
                                         <td><?= htmlspecialchars($user['first_name'] . ' ' . $user['middle_name'] . ' ' . $user['last_name']); ?></td>
                                         <td><?= htmlspecialchars($user['address']); ?></td>
@@ -740,13 +747,13 @@
                                                     <i class='bx bx-block'></i>
                                                 </button>
                                                 <button class="action-btn restrict" title="Restrict User">
-                                                <i class='bx bx-lock-alt'></i>
+                                                    <i class='bx bx-lock-alt'></i>
                                                 </button>
                                                 <button class="action-btn unban" title="Unban User">
-                                                <i class='bx bx-check-shield'></i>
+                                                    <i class='bx bx-check-shield'></i>
                                                 </button>
-                                                <button class="action-btn delete" title="Delete User">
-                                                <i class='bx bx-trash'></i>
+                                                <button class="action-btn delete" title="Delete User" data-uid="<?= htmlspecialchars($user['uid']); ?>" onclick="deleteUser(this)">
+                                                    <i class='bx bx-trash'></i>
                                                 </button>
                                             </div>
                                         </td> 
@@ -924,20 +931,34 @@
             window.location.href = `view_details.php?type=${type}&id=${id}`;
         }
 
-        function deleteUser(userId) {
+        async function deleteUser(button) {
             if (confirm('Are you sure you want to delete this user? This action cannot be undone.')) {
-                fetch('admin_actions.php', {
-                    method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({action: 'delete_user', user_id: userId})
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        alert('User deleted!');
-                        location.reload();
+                const userId = button.dataset.uid;
+                
+                button.disabled = true;
+                button.textContent = 'Deleting...';
+                
+                try {
+                    const response = await fetch(`/admin/deleteUser?uid=${userId}`);
+                    const result = await response.json();
+
+                    if (result[0].success) {
+                        alert(result[0].message);
+                        
+                        // Optional: remove after 2 seconds
+                        // setTimeout(() => row.remove(), 2000);
+                    } else {
+                        // Error handling
+                        alert('Error: ' + result[0].error);
+                        button.disabled = false;
+                        button.textContent = "<i class='bx bx-trash'></i>";
                     }
-                });
+                } catch (error) {
+                    console.error('Error:', error);
+                    alert('An error occurred. Please try again.');
+                    button.disabled = false;
+                    button.textContent = "<i class='bx bx-trash'></i>";
+                }
             }
         }
 
@@ -972,7 +993,7 @@
 
         function logout() {
             if (confirm('Are you sure you want to logout?')) {
-                window.location.href = 'logout.php';
+                window.location.href = '/auth/login';
             }
         }
 
@@ -1001,7 +1022,7 @@
                     const response = await fetch(`/admin/approveUser?uid=${userId}`);
                     const result = await response.json();
                     
-                    if (result.success) {
+                    if (result[0].success) {
                         // Success - update UI
                         row.style.backgroundColor = '#d4edda';
                         button.textContent = '✓';
@@ -1011,7 +1032,7 @@
                         setTimeout(() => row.remove(), 2000);
                     } else {
                         // Error handling
-                        alert('Error: ' + result.message);
+                        alert('Error: ' + result[0].error);
                         button.disabled = false;
                         button.textContent = 'Approve';
                     }

@@ -12,11 +12,19 @@ class AdminController extends Controller {
     $adminModel = new AdminModel();
     $retrievingAllUserResult = $adminModel->getAllUsers();
     $retrievingPendingUsersResult = $adminModel->getPendingUsers();
+    $allUserCount = $adminModel->allUserCount();
+    $pendingUserCount = $adminModel->pendingUsersCount();
+    $allItemCount = $adminModel->allItemsCount();
+    $pendingItemsCount = $adminModel->pendingItemsCount();
 
     $data = [
-      'allUsers' => $retrievingAllUserResult['success'] ? $retrievingAllUserResult['users'] : [],
-      'pendingUsers' => $retrievingPendingUsersResult['success'] ? $retrievingPendingUsersResult['users'] : [],
-      'error' => $retrievingPendingUsersResult['success'] ? null : $retrievingPendingUsersResult['error'] 
+      'allUser'           => $retrievingAllUserResult['success'] ? $retrievingAllUserResult['users'] : [],
+      'allUserCount'      => $allUserCount,
+      'pendingUsers'      => $retrievingPendingUsersResult['success'] ? $retrievingPendingUsersResult['users'] : [],
+      'pendingUsersCount' => $pendingUserCount,
+      'allItemCount'      => $allItemCount,
+      'pendingItemsCount' => $pendingItemsCount,
+      'error'             => $retrievingPendingUsersResult['success'] ? null : $retrievingPendingUsersResult['error'] 
     ];
 
     $this->view(Views::ADMIN_DASHBOARD, $data);
@@ -42,19 +50,43 @@ class AdminController extends Controller {
     if ($result['success']) {
       http_response_code(200); // OK
       header('Content-Type: application/json');
-      echo json_encode([
-        'success' => true,
-        'message' => $result['message']
-      ]);
+      echo json_encode([$result]);
       exit;
     } else {
       http_response_code(422); // Unprocessable Entity
       header('Content-Type: application/json');
+      echo json_encode([$result]);
+      exit;
+    }
+  }
+
+  public function deleteUser() {
+    $userId = $_GET['uid'] ?? null;
+
+    if (!$userId) {
+      http_response_code(400);
+      header('Content-Type: application/json');
       echo json_encode([
         'success' => false,
-        'message' => $result['error']
+        'error' => 'User Id is required'
       ]);
       exit;
+    }
+
+    $adminModel = new AdminModel();
+
+    $result = $adminModel->deleteUserById($userId);
+
+    if ($result['success']) {
+      http_response_code(200); //OK
+      header('Content-Type: application/json');
+      echo json_encode([$result]);
+      exit;
+    } else {
+      http_response_code(422);
+      header('Content-Type: application/json');
+      echo json_encode([$result]);
+      exit;     
     }
   }
 }

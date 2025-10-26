@@ -59,4 +59,88 @@ class AdminModel extends DbConnection {
       return ['success' => false, 'error' => 'Unable to approve user'];
     }
   }
+
+  public function deleteUserById($userId): array {
+    $query = "DELETE FROM users WHERE uid = :uid";
+
+    try {
+      $db = $this->connect();
+      $stmt = $db->prepare($query);
+      $stmt->execute([':uid' => $userId]);
+
+      if (!$stmt->rowCount() > 0) {
+        return ['success' => false, 'error' => 'User not found'];
+      }
+
+      return ['success' => true, 'message' => 'User deleted successfully!'];
+
+    } catch (PDOException $e) {
+      error_log('[' . date('Y-m-d H:i:s') . '] AdminModel::deleteUserById() failed - context: deleting user by id (' . $e->getMessage() . ')');
+      return ['success' => false, 'error' => 'Unable to delete user']; 
+    }
+  }
+
+  public function allUserCount(): int {
+    $query = "SELECT COUNT(*) as count FROM users";
+
+    try {
+      $db = $this->connect();
+      $stmt = $db->prepare($query);
+      $stmt->execute();
+
+      return (int) $stmt->fetch()['count'];
+
+    } catch (PDOException $e) {
+      error_log('[' . date('Y-m-d H:i:s') . '] AdminModel::allUserCount() failed - context: retrieving all user count (' . $e->getMessage() . ')');
+      return 0;
+    }
+  } 
+
+  public function pendingUsersCount(): int {
+    $query = "SELECT COUNT(*) as count FROM users WHERE approval_status = 'pending'";
+
+    try {
+      $db = $this->connect();
+      $stmt = $db->prepare($query);
+      $stmt->execute();
+
+      return (int) $stmt->fetch()['count'];
+
+    } catch (PDOException $e) {
+      error_log('[' . date('Y-m-d H:i:s') . '] AdminModel::pendingUsersCount() failed - context: retrieving pending users count (' . $e->getMessage() . ')');
+      return 0;
+    }
+  }
+
+  public function allItemsCount (): int {
+    $query = "SELECT COUNT(*) as count FROM items";
+
+    try {
+      $db = $this->connect();
+      $stmt = $db->prepare($query);
+      $stmt->execute();
+
+      return (int) $stmt->fetch()['count'];
+
+    } catch (PDOException $e) {
+      error_log('[' . date('Y-m-d H:i:s') . '] AdminModel::allItemsCount() failed - context: retrieving all items count (' . $e->getMessage() . ')');
+      return 0;
+    }
+  }
+
+  public function pendingItemsCount (): int {
+    $query = "SELECT COUNT(*) as count FROM items WHERE approval_status = 'pending'";
+
+    try {
+      $db = $this->connect();
+      $stmt = $db->prepare($query);
+      $stmt->execute();
+
+      return (int) $stmt->fetch()['count'];
+
+    } catch (PDOException $e) {
+      error_log('[' . date('Y-m-d H:i:s') . '] AdminModel::pendingItemsCount() failed - context: retrieving pending items count (' . $e->getMessage() . ')');
+      return 0;
+    }
+  }
 }

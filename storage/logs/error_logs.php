@@ -103,3 +103,38 @@
 [25-Oct-2025 19:19:32 Europe/Berlin] <br>[Oct-25-2025 19:19:32]<br>Uncaught Exception: Method (main.js) doesn't exists<brP>File: C:\xampp\htdocs\rentify\app\core\App.php (Line 64) <br>Stack trace:<br><br>#0 C:\xampp\htdocs\rentify\app\core\App.php(39): App->loadController()
 <br>#1 C:\xampp\htdocs\rentify\public\index.php(23): App->__construct()
 <br>#2 {main}<br><hr><br>
+[26-Oct-2025 04:25:20 Europe/Berlin] <br>[Oct-26-2025 04:25:20]<br>Uncaught Exception: Method (main.js) doesn't exists<brP>File: C:\xampp\htdocs\rentify\app\core\App.php (Line 64) <br>Stack trace:<br><br>#0 C:\xampp\htdocs\rentify\app\core\App.php(39): App->loadController()
+<br>#1 C:\xampp\htdocs\rentify\public\index.php(23): App->__construct()
+<br>#2 {main}<br><hr><br>
+[26-Oct-2025 13:42:16 Europe/Berlin] <br>[Oct-26-2025 13:42:16]<br>Uncaught Exception: Method (main.js) doesn't exists<brP>File: C:\xampp\htdocs\rentify\app\core\App.php (Line 64) <br>Stack trace:<br><br>#0 C:\xampp\htdocs\rentify\app\core\App.php(39): App->loadController()
+<br>#1 C:\xampp\htdocs\rentify\public\index.php(23): App->__construct()
+<br>#2 {main}<br><hr><br>
+[26-Oct-2025 13:42:17 Europe/Berlin] <br>[Oct-26-2025 13:42:17]<br>Uncaught ParseError: syntax error, unexpected token ";"<brP>File: C:\xampp\htdocs\rentify\app\views\pages\admin-dashboard.php (Line 691) <br>Stack trace:<br><br>#0 C:\xampp\htdocs\rentify\app\controllers\AdminController.php(22): Controller->view('/pages/admin-da...', Array)
+<br>#1 C:\xampp\htdocs\rentify\app\core\App.php(69): AdminController->dashboard()
+<br>#2 C:\xampp\htdocs\rentify\app\core\App.php(39): App->loadController()
+<br>#3 C:\xampp\htdocs\rentify\public\index.php(23): App->__construct()
+<br>#4 {main}<br><hr><br>
+[26-Oct-2025 18:39:07 Europe/Berlin] [2025-10-26 18:39:07] AdminModel::pendingUsersCount() failed - context: retrieving pending users count (SQLSTATE[42S02]: Base table or view not found: 1146 Table 'rentify_db.user' doesn't exist)
+[26-Oct-2025 18:39:08 Europe/Berlin] [2025-10-26 18:39:08] AdminModel::pendingUsersCount() failed - context: retrieving pending users count (SQLSTATE[42S02]: Base table or view not found: 1146 Table 'rentify_db.user' doesn't exist)
+[26-Oct-2025 18:39:19 Europe/Berlin] [2025-10-26 18:39:19] AdminModel::pendingUsersCount() failed - context: retrieving pending users count (SQLSTATE[42S02]: Base table or view not found: 1146 Table 'rentify_db.user' doesn't exist)
+[26-Oct-2025 18:39:19 Europe/Berlin] [2025-10-26 18:39:19] AdminModel::pendingUsersCount() failed - context: retrieving pending users count (SQLSTATE[42S02]: Base table or view not found: 1146 Table 'rentify_db.user' doesn't exist)
+[26-Oct-2025 18:39:19 Europe/Berlin] [2025-10-26 18:39:19] AdminModel::pendingUsersCount() failed - context: retrieving pending users count (SQLSTATE[42S02]: Base table or view not found: 1146 Table 'rentify_db.user' doesn't exist)
+[26-Oct-2025 18:39:20 Europe/Berlin] [2025-10-26 18:39:20] AdminModel::pendingUsersCount() failed - context: retrieving pending users count (SQLSTATE[42S02]: Base table or view not found: 1146 Table 'rentify_db.user' doesn't exist)
+[26-Oct-2025 18:39:20 Europe/Berlin] [2025-10-26 18:39:20] AdminModel::pendingUsersCount() failed - context: retrieving pending users count (SQLSTATE[42S02]: Base table or view not found: 1146 Table 'rentify_db.user' doesn't exist)
+[26-Oct-2025 18:39:20 Europe/Berlin] [2025-10-26 18:39:20] AdminModel::pendingUsersCount() failed - context: retrieving pending users count (SQLSTATE[42S02]: Base table or view not found: 1146 Table 'rentify_db.user' doesn't exist)
+[26-Oct-2025 18:40:08 Europe/Berlin] [2025-10-26 18:40:08] AdminModel::pendingUsersCount() failed - context: retrieving pending users count (SQLSTATE[42S02]: Base table or view not found: 1146 Table 'rentify_db.user' doesn't exist)
+[26-Oct-2025 18:40:32 Europe/Berlin] [2025-10-26 18:40:32] AdminModel::pendingUsersCount() failed - context: retrieving pending users count (SQLSTATE[42S02]: Base table or view not found: 1146 Table 'rentify_db.user' doesn't exist)
+[26-Oct-2025 18:42:01 Europe/Berlin] <br>[Oct-26-2025 18:42:01]<br>Uncaught Exception: Method (main.js) doesn't exists<brP>File: C:\xampp\htdocs\rentify\app\core\App.php (Line 64) <br>Stack trace:<br><br>#0 C:\xampp\htdocs\rentify\app\core\App.php(39): App->loadController()
+<br>#1 C:\xampp\htdocs\rentify\public\index.php(23): App->__construct()
+<br>#2 {main}<br><hr><br>
+[26-Oct-2025 18:42:07 Europe/Berlin] <br>[Oct-26-2025 18:42:07]<br>Uncaught Exception: Method (main.js) doesn't exists<brP>File: C:\xampp\htdocs\rentify\app\core\App.php (Line 64) <br>Stack trace:<br><br>#0 C:\xampp\htdocs\rentify\app\core\App.php(39): App->loadController()
+<br>#1 C:\xampp\htdocs\rentify\public\index.php(23): App->__construct()
+<br>#2 {main}<br><hr><br>
+[26-Oct-2025 18:42:17 Europe/Berlin] Failed login attempt for email: user@gmail.com
+[26-Oct-2025 18:43:15 Europe/Berlin] Successful login for user ID: 16
+[26-Oct-2025 18:43:15 Europe/Berlin] <br>[Oct-26-2025 18:43:15]<br>Uncaught Exception: Method (main.js) doesn't exists<brP>File: C:\xampp\htdocs\rentify\app\core\App.php (Line 64) <br>Stack trace:<br><br>#0 C:\xampp\htdocs\rentify\app\core\App.php(39): App->loadController()
+<br>#1 C:\xampp\htdocs\rentify\public\index.php(23): App->__construct()
+<br>#2 {main}<br><hr><br>
+[26-Oct-2025 18:45:10 Europe/Berlin] <br>[Oct-26-2025 18:45:10]<br>Uncaught Exception: Method (main.js) doesn't exists<brP>File: C:\xampp\htdocs\rentify\app\core\App.php (Line 64) <br>Stack trace:<br><br>#0 C:\xampp\htdocs\rentify\app\core\App.php(39): App->loadController()
+<br>#1 C:\xampp\htdocs\rentify\public\index.php(23): App->__construct()
+<br>#2 {main}<br><hr><br>
