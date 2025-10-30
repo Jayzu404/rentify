@@ -432,7 +432,7 @@ class ItemModel extends DbConnection {
                 INNER JOIN users u ON i.owner_uid = u.uid
                 LEFT JOIN rental_pricing rp ON i.item_id = rp.item_id
                 LEFT JOIN item_images img ON i.item_id = img.item_id AND img.is_primary = 1
-                WHERE i.status = 'available'
+                WHERE i.approval_status = 'approved'
                 ORDER BY i.created_at DESC
                 LIMIT :limit OFFSET :offset";
       

@@ -10,18 +10,24 @@ class AdminController extends Controller {
     }
 
     $adminModel = new AdminModel();
-    $retrievingAllUserResult = $adminModel->getAllUsers();
+    $retrievingAllUserResult      = $adminModel->getAllUsers();
     $retrievingPendingUsersResult = $adminModel->getPendingUsers();
-    $allUserCount = $adminModel->allUserCount();
-    $pendingUserCount = $adminModel->pendingUsersCount();
-    $allItemCount = $adminModel->allItemsCount();
-    $pendingItemsCount = $adminModel->pendingItemsCount();
+    $allUserCount                 = $adminModel->allUserCount();
+    $pendingUserCount             = $adminModel->pendingUsersCount();
+
+    $retrievingAllItems           = $adminModel->getItems();
+    $allItemCount                 = $adminModel->allItemsCount();
+    $pendingItemsCount            = $adminModel->pendingItemsCount();
+    $retrievingPendingItemsResult = $adminModel->getPendingItems();
 
     $data = [
       'allUser'           => $retrievingAllUserResult['success'] ? $retrievingAllUserResult['users'] : [],
       'allUserCount'      => $allUserCount,
       'pendingUsers'      => $retrievingPendingUsersResult['success'] ? $retrievingPendingUsersResult['users'] : [],
       'pendingUsersCount' => $pendingUserCount,
+
+      'allItems'          => $retrievingAllItems['success'] ? $retrievingAllItems['items'] : [],
+      'pendingItems'      => $retrievingPendingItemsResult['success'] ? $retrievingPendingItemsResult['items'] : [],
       'allItemCount'      => $allItemCount,
       'pendingItemsCount' => $pendingItemsCount,
       'error'             => $retrievingPendingUsersResult['success'] ? null : $retrievingPendingUsersResult['error'] 
@@ -50,13 +56,41 @@ class AdminController extends Controller {
     if ($result['success']) {
       http_response_code(200); // OK
       header('Content-Type: application/json');
-      echo json_encode([$result]);
+      echo json_encode($result);
       exit;
     } else {
       http_response_code(422); // Unprocessable Entity
       header('Content-Type: application/json');
-      echo json_encode([$result]);
+      echo json_encode($result);
       exit;
+    }
+  }
+
+  public function rejectUser() {
+    $userId = $_GET['uid'] ?? null;
+
+    if (!$userId) {
+      http_response_code(400); // Bad Request
+      header('Content-Type: application/json');
+      echo json_encode([
+        'success' => false,
+        'message' => 'User ID is required'
+      ]);
+      exit;
+    }
+
+    $adminModel = new AdminModel();
+
+    $result = $adminModel->rejectUser($userId);
+
+    if ($result['success']) {
+      http_response_code(200); //OK
+      header('Content-Type: application/json');
+      echo json_encode($result);
+    } else {
+      http_response_code(422);
+      header('Content-Type: application/json');
+      echo json_encode($result);
     }
   }
 
@@ -80,13 +114,73 @@ class AdminController extends Controller {
     if ($result['success']) {
       http_response_code(200); //OK
       header('Content-Type: application/json');
-      echo json_encode([$result]);
+      echo json_encode($result);
       exit;
     } else {
       http_response_code(422);
       header('Content-Type: application/json');
-      echo json_encode([$result]);
+      echo json_encode($result);
       exit;     
     }
   }
+
+  public function approveItem() {
+    $itemId = $_GET['itemId'] ?? null;
+
+    if (!$itemId) {
+      http_response_code(400);
+      header('Content-Type: application/json');
+      echo json_encode([
+        'success' => false,
+        'error' => 'Item Id is required'
+      ]);
+      exit;
+    }
+
+    $adminModel = new AdminModel();
+
+    $result = $adminModel->approveItem($itemId);
+
+    if ($result['success']) {
+      http_response_code(200); //OK
+      header('Content-Type: application/json');
+      echo json_encode($result);
+      exit;
+    } else {
+      http_response_code(422);
+      header('Content-Type: application/json');
+      echo json_encode($result);
+      exit;     
+    }
+  }
+
+    public function rejectItem() {
+    $itemId = $_GET['itemId'] ?? null;
+
+    if (!$itemId) {
+      http_response_code(400);
+      header('Content-Type: application/json');
+      echo json_encode([
+        'success' => false,
+        'error' => 'Item Id is required'
+      ]);
+      exit;
+    }
+
+    $adminModel = new AdminModel();
+
+    $result = $adminModel->rejectItem($itemId);
+
+    if ($result['success']) {
+      http_response_code(200); //OK
+      header('Content-Type: application/json');
+      echo json_encode($result);
+      exit;
+    } else {
+      http_response_code(422);
+      header('Content-Type: application/json');
+      echo json_encode($result);
+      exit;     
+    }
+  }  
 }

@@ -51,8 +51,8 @@ class AuthModel extends DbConnection {
             ];
         }
 
-        $query = "INSERT INTO users (first_name, middle_name, last_name, address, email, id_path, password, created_at)
-                  VALUES (:firstName, :middleName, :lastName, :address, :email, :idPath, :hashedPassword, NOW())";
+        $query = "INSERT INTO users (first_name, middle_name, last_name, address, email, id_path, password)
+                  VALUES (:firstName, :middleName, :lastName, :address, :email, :idPath, :hashedPassword)";
 
         try {
             $db = $this->connect();
@@ -135,10 +135,10 @@ class AuthModel extends DbConnection {
     }
 
     public function authenticateUser($email, $password){
-        $db = $this->connect();
-        $query = "SELECT uid, email, password FROM users WHERE email = :email LIMIT 1";
+        $query = "SELECT uid, email, password FROM users WHERE email = :email AND approval_status = 'approved' LIMIT 1";
 
         try {
+            $db = $this->connect();
             $stmt = $db->prepare($query);
             $stmt->execute([':email' => $email]);
 

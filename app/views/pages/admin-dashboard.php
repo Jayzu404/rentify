@@ -1,6 +1,6 @@
 <?php
     // echo '<pre>';
-    // var_dump($data['pendingUsers']);
+    // var_dump($data);
     // echo '</pre>';
 ?>
 
@@ -50,7 +50,7 @@
         }
 
         .logout-btn {
-            background: #dc2626;
+            background: #dc3545;
             color: #fff;
             border: none;
             padding: 0.5rem 1rem;
@@ -274,13 +274,14 @@
         }
 
         th {
-            padding: 0.875rem 1rem;
+            padding: 0.875rem 1.5rem;
             text-align: left;
             color: #475569;
             font-weight: 600;
             font-size: 0.8125rem;
             text-transform: uppercase;
             letter-spacing: 0.05em;
+            white-space: nowrap;
             border-bottom: 1px solid #e8ecef;
         }
 
@@ -289,6 +290,7 @@
             text-align: left;
             border-bottom: 1px solid #f1f5f9;
             font-size: 0.9375rem;
+            white-space: nowrap;
             color: #334155;
         }
 
@@ -704,11 +706,11 @@
                     </div>
                     <div class="stat-card">
                         <h3>Rentify Monthly Commission</h3>
-                        <div class="number" id="rentify-monthly">0</div>
+                        <div class="number" id="rentify-monthly">₱ 7,323.00</div>
                     </div>
                     <div class="stat-card">
                         <h3>Rentify Yearly Commission</h3>
-                        <div class="number" id="rentify-yearly">0</div>
+                        <div class="number" id="rentify-yearly">₱ 432,788.00</div>
                     </div>
                 </div>
             </div>
@@ -726,7 +728,8 @@
                                     <th>Full Name</th>
                                     <th>Address</th>
                                     <th>Email</th>
-                                    <th>Status</th>
+                                    <th>Approval Status</th>
+                                    <th>Account Status</th>
                                     <th>Uploaded ID</th>
                                     <th>Join Date</th>
                                     <th>Actions</th>
@@ -739,6 +742,7 @@
                                         <td><?= htmlspecialchars($user['address']); ?></td>
                                         <td><?= htmlspecialchars($user['email']); ?></td>
                                         <td><?= htmlspecialchars($user['approval_status']); ?></td>
+                                        <td><?= htmlspecialchars($user['account_status']); ?></td>
                                         <td><button class="view-btn" onclick="window.open('/file/image/uploads/ids/<?= htmlspecialchars($user['id_path']); ?>', '_blank')"><i class='bx bx-show'></i>View</button></td>
                                         <td><?= htmlspecialchars($user['created_at']); ?></td>
                                         <td>
@@ -791,10 +795,10 @@
                                     <td><button class="view-btn" onclick="window.open('/file/image/uploads/ids/<?= htmlspecialchars($pending['id_path']); ?>', '_blank')"><i class='bx bx-show'></i>View</button></td>
                                     <td><?= htmlspecialchars($pending['created_at']); ?></td>
                                     <td>
-                                        <button class="approve-btn" data-uid="<?= htmlspecialchars($pending['uid']); ?>" onclick="approveUser(this)">
+                                        <button class="approve-btn" data-uid="<?= htmlspecialchars($pending['uid'] ?? 0); ?>" onclick="approveUser(this)">
                                             <i class='bx bx-check'></i> Approve
                                         </button>
-                                        <button class="reject-btn">
+                                        <button class="reject-btn" data-uid="<?= htmlspecialchars($pending['uid'] ?? 0)  ?>" onclick="rejectUser(this)">
                                             <i class='bx bx-x'></i> Reject
                                         </button>    
                                     </td>   
@@ -815,17 +819,42 @@
                         <table id="pending-items-table">
                             <thead>
                                 <tr>
+                                    <th>Item ID</th>
                                     <th>Item Name</th>
-                                    <th>Category</th>
                                     <th>Owner</th>
-                                    <th>Price/Day</th>
+                                    <th>Category</th>
+                                    <th>Condition</th>
+                                    <th>Starting Price</th>
+                                    <th>Security Deposit</th>
                                     <th>Date Listed</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
                             <tbody id="pending-items-body">
-                                <!-- PHP will populate this -->
-                            </tbody>
+                               <?php foreach ($data['pendingItems'] as $pendingItem): ?>
+                                <tr>
+                                    <td><?= htmlspecialchars($pendingItem['item_id']); ?></td>
+                                    <td><?= htmlspecialchars($pendingItem['title']); ?></td>
+                                    <td><?= htmlspecialchars($pendingItem['owner_name']); ?></td>
+                                    <td><?= htmlspecialchars($pendingItem['category']); ?></td>
+                                    <td><?= htmlspecialchars($pendingItem['item_condition']); ?></td>
+                                    <td>100</td>
+                                    <td><?= htmlspecialchars($pendingItem['security_deposit']); ?></td>
+                                    <td><?= htmlspecialchars($pendingItem['created_at']); ?></td>
+                                    <td>
+                                        <button class="view-btn"><i class='bx bx-show'>
+                                            </i>View
+                                        </button>
+                                        <button class="approve-btn" data-uid="<?= htmlspecialchars($pendingItem['item_id']); ?>" onclick="approveItem(this)">
+                                            <i class='bx bx-check'></i> Approve
+                                        </button>
+                                        <button class="reject-btn" data-uid="<?= htmlspecialchars($pendingItem['item_id']);  ?>" onclick="rejectItem(this)">
+                                            <i class='bx bx-x'></i> Reject
+                                        </button>    
+                                    </td>   
+                                </tr>
+                               <?php endforeach; ?> 
+                           </tbody>
                         </table>
                     </div>
                 </div>
@@ -840,16 +869,39 @@
                         <table id="all-items-table">
                             <thead>
                                 <tr>
+                                    <th>Item ID</th>
                                     <th>Item Name</th>
-                                    <th>Category</th>
                                     <th>Owner</th>
-                                    <th>Price/Day</th>
-                                    <th>Status</th>
+                                    <th>Category</th>
+                                    <th>Condition</th>
+                                    <th>Starting Price</th>
+                                    <th>Security Deposit</th>
+                                    <th>Approval Status</th>
+                                    <th>Item Status</th>
+                                    <th>Date Listed</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
                             <tbody id="all-items-body">
-                                <!-- PHP will populate this -->
+                                <?php foreach ($data['allItems'] as $item): ?>
+                                    <tr>
+                                        <td><?= htmlspecialchars($item['item_id']); ?></td>
+                                        <td><?= htmlspecialchars($item['title']); ?></td>
+                                        <td><?= htmlspecialchars($item['owner_name']); ?></td>
+                                        <td><?= htmlspecialchars($item['category']); ?></td>
+                                        <td><?= htmlspecialchars($item['item_condition']); ?></td>
+                                        <td>100</td>
+                                        <td><?= htmlspecialchars($item['security_deposit']); ?></td>
+                                        <td><?= htmlspecialchars($item['approval_status']); ?></td>
+                                        <td><?= htmlspecialchars($item['status']); ?></td>
+                                        <td><?= htmlspecialchars($item['created_at']); ?></td>
+                                        <td>
+                                            <button class="view-btn"><i class='bx bx-show'>
+                                                </i>Full Info
+                                            </button>
+                                        </td>   
+                                    </tr>
+                               <?php endforeach; ?> 
                             </tbody>
                         </table>
                     </div>
@@ -875,54 +927,108 @@
             event.target.classList.add('active');
         }
 
-        function rejectUser(userId) {
-            if (confirm('Reject this user registration?')) {
-                fetch('admin_actions.php', {
-                    method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({action: 'reject_user', user_id: userId})
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        alert('User rejected!');
-                        location.reload();
+        async function rejectUser(button) {
+            if (confirm('Are you sure you want to reject this user?')) {
+                const userId = button.dataset.uid;
+                const row = button.closest('tr');
+                
+                button.textContent = 'Rejecting...';
+                button.disabled = true;
+                
+                try {
+                    const response = await fetch(`/admin/rejectUser?uid=${userId}`);
+                    const result = await response.json();
+
+                    if (result.success) {
+                        alert(result.message);
+                        
+                        // Optional: remove after 2 seconds
+                        row.style.backgroundColor = '#d4edda';
+                        button.textContent = '✓';
+                        
+                        setTimeout(() => row.remove(), 2000);
+                    } else {
+                        // Error handling
+                        alert('Error: ' + result.error);
+                        button.disabled = false;
+                        button.textContent = "<i class='bx bx-trash'></i>";
                     }
-                });
+                } catch (error) {
+                    console.error('Error:', error);
+                    alert('An error occurred. Please try again.');
+                    button.disabled = false;
+                    button.textContent = "<s='bx bx-trash'></i>";
+                }
             }
         }
 
-        function approveItem(itemId) {
+        async function approveItem(button) {
             if (confirm('Approve this item listing?')) {
-                fetch('admin_actions.php', {
-                    method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({action: 'approve_item', item_id: itemId})
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        alert('Item approved successfully!');
-                        location.reload();
+                const itemId = button.dataset.uid;
+                const row = button.closest('tr');
+                
+                button.textContent = 'Approving...';
+                button.disabled = true;
+                
+                try {
+                    const response = await fetch(`/admin/approveItem?itemId=${itemId}`);
+                    const result = await response.json();
+
+                    if (result.success) {
+                        alert(result.message);
+                        
+                        // Optional: remove after 2 seconds
+                        row.style.backgroundColor = '#d4edda';
+                        button.textContent = '✓';
+                        
+                        setTimeout(() => row.remove(), 2000);
+                    } else {
+                        // Error handling
+                        alert('Error: ' + result.error);
+                        button.disabled = false;
+                        button.textContent = "<i class='bx bx-trash'></i>";
                     }
-                });
+                } catch (error) {
+                    console.error('Error:', error);
+                    alert('An error occurred. Please try again.');
+                    button.disabled = false;
+                    button.textContent = "<s='bx bx-trash'></i>";
+                }
             }
         }
 
-        function rejectItem(itemId) {
+        async function rejectItem(button) {
             if (confirm('Reject this item listing?')) {
-                fetch('admin_actions.php', {
-                    method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({action: 'reject_item', item_id: itemId})
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        alert('Item rejected!');
-                        location.reload();
+                const itemId = button.dataset.uid;
+                const row = button.closest('tr');
+                
+                button.textContent = 'Approving...';
+                button.disabled = true;
+                
+                try {
+                    const response = await fetch(`/admin/rejectItem?itemId=${itemId}`);
+                    const result = await response.json();
+
+                    if (result.success) {
+                        alert(result.message);
+                        
+                        // Optional: remove after 2 seconds
+                        row.style.backgroundColor = '#d4edda';
+                        button.textContent = '✓';
+                        
+                        setTimeout(() => row.remove(), 2000);
+                    } else {
+                        // Error handling
+                        alert('Error: ' + result.error);
+                        button.disabled = false;
+                        button.textContent = "<i class='bx bx-trash'></i>";
                     }
-                });
+                } catch (error) {
+                    console.error('Error:', error);
+                    alert('An error occurred. Please try again.');
+                    button.disabled = false;
+                    button.textContent = "<s='bx bx-trash'></i>";
+                }
             }
         }
 
@@ -934,19 +1040,22 @@
         async function deleteUser(button) {
             if (confirm('Are you sure you want to delete this user? This action cannot be undone.')) {
                 const userId = button.dataset.uid;
+                const row = button.closest('tr');
                 
                 button.disabled = true;
-                button.textContent = 'Deleting...';
                 
                 try {
                     const response = await fetch(`/admin/deleteUser?uid=${userId}`);
                     const result = await response.json();
 
-                    if (result[0].success) {
-                        alert(result[0].message);
+                    if (result.success) {
+                        alert(result.message);
                         
                         // Optional: remove after 2 seconds
-                        // setTimeout(() => row.remove(), 2000);
+                        row.style.backgroundColor = '#fecaca';
+                        button.textContent = '✓';
+
+                        setTimeout(() => row.remove(), 2000);
                     } else {
                         // Error handling
                         alert('Error: ' + result[0].error);
@@ -1022,17 +1131,16 @@
                     const response = await fetch(`/admin/approveUser?uid=${userId}`);
                     const result = await response.json();
                     
-                    if (result[0].success) {
+                    if (result.success) {
                         // Success - update UI
                         row.style.backgroundColor = '#d4edda';
                         button.textContent = '✓';
-                        button.classList.add('btn-success');
                         
                         // Optional: remove after 2 seconds
                         setTimeout(() => row.remove(), 2000);
                     } else {
                         // Error handling
-                        alert('Error: ' + result[0].error);
+                        alert('Error: ' + result.error);
                         button.disabled = false;
                         button.textContent = 'Approve';
                     }

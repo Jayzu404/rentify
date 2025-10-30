@@ -7,6 +7,9 @@
 
   $emailInput = $_SESSION['userFormData']['email'] ?? '';
   $errors = $_SESSION['errors'] ?? '';
+  // echo '<pre>';
+  // var_dump($_SESSION);
+  // echo '</pre>';
   unset($_SESSION['userFormData'], $_SESSION['errors']);
 ?>
 <!DOCTYPE html>
@@ -26,7 +29,7 @@
     <?php unset($_SESSION['successSignup']); ?>
   <?php endif; ?>
 
-  <?php if (!empty($errors)): ?>
+  <?php if (!empty($errors['general'])): ?>
     <div class="alert alert-danger position-fixed fixed-top text-center" role="alert" style="z-index: 1050;" id="dangerAlert">
       <?= $errors['general']; ?>
     </div>

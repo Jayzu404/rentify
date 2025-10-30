@@ -18,8 +18,18 @@ CREATE TABLE users(
   id_path VARCHAR(255) NOT NULL,
   password VARCHAR(255) NOT NULL,
   approval_status ENUM('pending', 'approved', 'rejected') DEFAULT 'pending',
-  created_at DATETIME NOT NULL,
+  account_status ENUM('active', 'inactive', 'banned', 'suspended') DEFAULT 'inactive',
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
 );
+
+-- DUMP SAMPLE USERS
+INSERT INTO users (first_name, middle_name, last_name, address, email, id_path, password, approval_status, account_status)
+  VALUES
+    ('Teejay', NULL, 'Arancina', 'Salangi, Almeria, Biliran', 'teejay@example.com', 'uploads/ids/david_id.jpg', '123', 'pending', 'inactive'),
+    ('Eugene', NULL, 'Andoy', 'Tamarindo, Almeria, Biliran', 'eugene@example.com', 'uploads/ids/john_id.jpg', '123', 'pending', 'inactive'),
+    ('Ladylyn', NULL, 'Alvez', 'Sabang, Naval, Biliran', 'ladylyn@example.com', 'uploads/ids/jane_id.jpg', '123', 'pending', 'inactive'),
+    ('Joey', NULL, 'Ibanez', 'Almeria, Naval, Biliran', 'joey@example.com', 'uploads/ids/mike_id.jpg', '123', 'pending', 'inactive'),
+    ('Ritchie', NULL, 'Romagos', 'Agpangi, Naval, Biliran', 'ritchie@example.com', 'uploads/ids/sarah_id.jpg', '123', 'pending', 'inactive');
 
 -- ===============================
 -- ADMINS
