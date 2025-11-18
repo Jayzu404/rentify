@@ -21,6 +21,9 @@ class Views {
   const ADD_ITEM = '/pages/add-item';
   const TERMS_AND_CONDITIONS = '/pages/terms-and-conditions';
   const VIEW_ITEM_DETAILS = '/pages/view-item';
+  const EDIT_ITEM = '/pages/edit-item';
+  const CHECKOUT_PAGE = '/pages/checkout';
+  const PROCESS_BOOKING = '/pages/process-booking';
   const ADMIN_DASHBOARD = '/pages/admin-dashboard';
   
   // ==================== AUTH ====================

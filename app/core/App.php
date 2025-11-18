@@ -14,7 +14,8 @@ class App {
     'item'      => 'ItemController',
     'dashboard' => 'DashboardController',
     'user'      => 'UserController',
-    'file'      => 'FileController'
+    'file'      => 'FileController',
+    'rental'    => 'RentalController'
   ];
 
   public function __construct()

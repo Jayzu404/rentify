@@ -117,6 +117,35 @@ class AdminModel extends DbConnection {
     }
   }
 
+  public function getPendingPayments() {
+    // $query = "SELECT p.*, u.first_name AS owner, i.title AS item, rp.amount AS totalAmount FROM payments JOIN items AS i ON ";
+    $query = "
+              SELECT 
+                CONCAT(u.first_name, ' ', u.last_name) AS renter_name,
+                i.title AS item_name,
+                p.*
+              FROM payment AS p
+              JOIN rentals AS r ON p.rental_id = r.rental_id
+              JOIN items AS i ON r.item_id = i.item_id
+              JOIN users AS u ON r.renter_uid = u.uid
+              WHERE payment_status = 'pending';
+      ";
+
+    try {
+      $db = $this->connect();
+      $stmt = $db->prepare($query);
+      $stmt->execute();
+
+      $paymentRecords = $stmt->fetchAll();
+
+      return['success' => true, 'paymentRecords' => $paymentRecords];
+
+    } catch (PDOException $e) {
+        error_log(' AdminModel::getPendingPayments() failed -  (' . $e->getMessage() . ')');
+        return ['success' => false, 'error' => 'Unable to retrieve pending payment records'];
+    }
+  }
+
   public function approveUser($userId): array {
     $query = "UPDATE users SET approval_status = 'approved', account_status = 'active' WHERE uid = :id AND approval_status = 'pending'";
 
@@ -263,7 +292,7 @@ class AdminModel extends DbConnection {
     }
   }
 
-    public function rejectItem ($itemId): array {
+  public function rejectItem ($itemId): array {
     $query = "UPDATE items SET approval_status = 'rejected' WHERE item_id = :itemId";
 
     try {
@@ -280,6 +309,26 @@ class AdminModel extends DbConnection {
     } catch (PDOException $e) {
       error_log('AdminModel::approveItem() failed - context: approving pending item (' . $e->getMessage() . ')');
       return  ['success' => false, 'error' => 'Unable to reject item'];
+    }
+  }
+
+  public function verifyPayment ($paymentID): array {
+    $query = "UPDATE payment SET payment_status = 'verified' WHERE payment_id = :paymentID";
+
+    try {
+      $db = $this->connect();
+      $stmt = $db->prepare($query);
+      $stmt->execute([':paymentID' => $paymentID]);
+      
+      if (!$stmt->rowCount() > 0) {
+        return  ['success' => false, 'error' => 'Unable to verifiy payment (payment record not found or payment already verified)'];
+      }
+
+      return ['success' => true, 'message' => 'Payment verified successfully!'];
+
+    } catch (PDOException $e) {
+      error_log('AdminModel::verifyPayment() failed - (' . $e->getMessage() . ')');
+      return  ['success' => false, 'error' => 'Unable to verify payment'];
     }
   }
 }

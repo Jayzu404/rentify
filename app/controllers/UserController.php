@@ -8,7 +8,7 @@ class UserController extends Controller {
     $userId = $_GET['uid'] ?? null;
 
     if (!$userId) {
-      error_log('[' . date('Y-m-d H:i:s') . '] UserController::profile() failed - context: retrieving user id');
+      error_log('UserController::profile() failed - context: retrieving user id');
       header('Location: /home/index');
       exit;
     }

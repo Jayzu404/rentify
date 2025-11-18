@@ -12,11 +12,17 @@
     }
 
     public function index(){
+      if (session_status() !== PHP_SESSION_ACTIVE) {
+        session_start();
+      }
+      
       $recentItems = $this->itemModel->getRecentItems();
 
       $data = [
         'recentItems' => $recentItems
       ];
+
+      // var_dump($_SESSION['user']);
       $this->view(Views::HOME, $data);
     }
 

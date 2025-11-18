@@ -259,6 +259,10 @@ class ItemController extends Controller {
     }
   }
 
+  public function edit () {
+    $this->view(Views::EDIT_ITEM);
+  }
+
   /**
    * Upload images and return file paths
    */

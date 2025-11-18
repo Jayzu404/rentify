@@ -91,6 +91,16 @@ $current_page = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
     transform: scale(1.08);
     box-shadow: 0 4px 10px rgba(30, 64, 175, 0.3);
   }
+  .notification {
+    padding: 10px;
+    border-radius: 55%;
+    cursor: pointer;
+  }
+
+.notification:hover {
+  background-color: #d8d8d8ff;
+}
+
 </style>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top py-3 shadow-sm">
@@ -136,6 +146,10 @@ $current_page = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
             <div class="user-avatar ms-3" title="Profile" onclick="window.location.href='/user/profile'">
               <img src="/assets/images/cat-pfp.jpg" alt="User" width="45" height="45">
+            </div>
+
+            <div class="notification">
+              <i class="fa-regular fa-bell"></i>
             </div>
         <?php else: ?>    
           <button class="btn btn-outline-primary btn-sm me-2" onclick="window.location.href='/auth/signup'">Signup</button>

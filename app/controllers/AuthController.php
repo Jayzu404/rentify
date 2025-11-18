@@ -83,7 +83,7 @@ class AuthController extends Controller {
       if($result['success']){
         unset($_SESSION['userFormData'], $_SESSION['errors']);
         $_SESSION['user'] = $result['user'];
-        $_SESSION['isLoggedIn'] = true;
+        $_SESSION['isLoggedIn'] = true; 
         header('Location: /home');
         exit;
       } else {
@@ -172,6 +172,7 @@ class AuthController extends Controller {
     foreach ($fields as $field => $type) {
       //safe approach if input does not have name attribute (no name attr = null)
       $value = $postData[$field] ?? null;
+      
       if ($type === 'string') {
         $sanitizedInputs[$field] = Sanitizer::sanitizeString($value);
       } elseif ($type === 'string|null') {

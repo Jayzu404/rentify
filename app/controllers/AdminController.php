@@ -10,15 +10,21 @@ class AdminController extends Controller {
     }
 
     $adminModel = new AdminModel();
+
+    // users actions
     $retrievingAllUserResult      = $adminModel->getAllUsers();
     $retrievingPendingUsersResult = $adminModel->getPendingUsers();
     $allUserCount                 = $adminModel->allUserCount();
     $pendingUserCount             = $adminModel->pendingUsersCount();
 
+    // items actions
     $retrievingAllItems           = $adminModel->getItems();
     $allItemCount                 = $adminModel->allItemsCount();
     $pendingItemsCount            = $adminModel->pendingItemsCount();
     $retrievingPendingItemsResult = $adminModel->getPendingItems();
+
+    // payment actions
+    $retrievingPendingPayments = $adminModel->getPendingPayments();
 
     $data = [
       'allUser'           => $retrievingAllUserResult['success'] ? $retrievingAllUserResult['users'] : [],
@@ -30,6 +36,9 @@ class AdminController extends Controller {
       'pendingItems'      => $retrievingPendingItemsResult['success'] ? $retrievingPendingItemsResult['items'] : [],
       'allItemCount'      => $allItemCount,
       'pendingItemsCount' => $pendingItemsCount,
+
+      'pendingPayments'   => $retrievingPendingPayments['success'] ? $retrievingPendingPayments['paymentRecords'] : [],
+
       'error'             => $retrievingPendingUsersResult['success'] ? null : $retrievingPendingUsersResult['error'] 
     ];
 
@@ -154,7 +163,7 @@ class AdminController extends Controller {
     }
   }
 
-    public function rejectItem() {
+  public function rejectItem() {
     $itemId = $_GET['itemId'] ?? null;
 
     if (!$itemId) {
@@ -170,6 +179,36 @@ class AdminController extends Controller {
     $adminModel = new AdminModel();
 
     $result = $adminModel->rejectItem($itemId);
+
+    if ($result['success']) {
+      http_response_code(200); //OK
+      header('Content-Type: application/json');
+      echo json_encode($result);
+      exit;
+    } else {
+      http_response_code(422);
+      header('Content-Type: application/json');
+      echo json_encode($result);
+      exit;     
+    }
+  }  
+
+  public function verifyPayment() {
+    $paymentID = $_GET['paymentID'] ?? null;
+
+    if (!$paymentID) {
+      http_response_code(400);
+      header('Content-Type: application/json');
+      echo json_encode([
+        'success' => false,
+        'error' => 'Payment ID is required'
+      ]);
+      exit;
+    }
+
+    $adminModel = new AdminModel();
+
+    $result = $adminModel->verifyPayment($paymentID);
 
     if ($result['success']) {
       http_response_code(200); //OK

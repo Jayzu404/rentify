@@ -6,6 +6,12 @@
     session_start();
   }
 
+  $userID = $_SESSION['user']['id'] ?? null;
+
+//   echo '<pre>';
+//   var_dump($data);
+//   echo '<pre>';
+
   $recentItems = $data['recentItems'] ?? [];    
 
   function getCategoryDisplay($cat) {
@@ -226,12 +232,14 @@
                                         >
                                             <i class="bi bi-eye"></i> View
                                         </button>
-                                        <button 
-                                            class="btn btn-rent flex-fill"
-                                            onclick="window.location.href='/rental/request?item_id=<?= $item['item_id'] ?>'"
-                                        >
-                                            <i class="bi bi-cart-plus"></i> Rent
-                                        </button>
+                                        <?php if ($userID != $item['owner_id'] && $item['status'] != 'rented'): ?>
+                                            <button 
+                                                class="btn btn-rent flex-fill"
+                                                onclick="window.location.href='/rental/checkout?item_id=<?= $item['item_id'] ?>'"
+                                            >
+                                                <i class="bi bi-cart-plus"></i> Rent
+                                            </button>
+                                        <?php endif; ?>    
                                     </div>
                                 </div>
                             </div>

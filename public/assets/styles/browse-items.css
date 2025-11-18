@@ -51,7 +51,7 @@
     }
 
     .btn-rent {
-      background-color: #ebac25;
+      background-color: #1e40af;
       color: #fff;
       font-weight: 500;
       border-radius: 8px;
@@ -60,13 +60,13 @@
     }
 
     .btn-rent:hover {
-      background-color: #d79a1d;
+      background-color: #264cca;
       color: #fff;
     }
 
     .btn-view {
-      border: 1px solid #ebac25;
-      color: #ebac25;
+      border: 1px solid #1e40af;
+      color: #1e40af;
       font-weight: 500;
       border-radius: 8px;
       padding: 8px 14px;
@@ -74,7 +74,7 @@
     }
 
     .btn-view:hover {
-      background-color: #ebac25;
+      background-color: #1e40af;
       color: #fff;
     }
 

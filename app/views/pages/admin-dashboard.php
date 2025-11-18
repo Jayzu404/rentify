@@ -178,7 +178,7 @@
         .page-header h2 {
             font-size: 1.75rem;
             font-weight: 600;
-            color: #0f172a;
+            color: #0f2a1aff;
             letter-spacing: -0.02em;
             margin-bottom: 0.5rem;
         }
@@ -681,6 +681,13 @@
             <div class="nav-item" onclick="showSection('pending-users')">👤 Pending Users</div>
             <div class="nav-item" onclick="showSection('pending-items')">📦 Pending Items</div>
             <div class="nav-item" onclick="showSection('all-items')">📋 All Items</div>
+            <div class="nav-item">📦 Pending booking</div>
+            <!-- Add these after the existing nav items in your sidebar -->
+            <div class="nav-item" onclick="showSection('pending-payments')">💳 Verify Payments</div>
+            <div class="nav-item" onclick="showSection('awaiting-owner')">⏳ Awaiting Owner</div>
+            <div class="nav-item" onclick="showSection('active-rentals')">✅ Active Rentals</div>
+            <div class="nav-item" onclick="showSection('completed-rentals')">✔️ Completed</div>
+            <div class="nav-item" onclick="showSection('refunds')">💰 Refunds</div>
         </aside>
 
         <main class="main-content">
@@ -787,23 +794,31 @@
                                 </tr>
                             </thead>
                             <tbody id="pending-users-body">
-                               <?php foreach ($data['pendingUsers'] as $pending): ?>
-                                <tr>
-                                    <td><?= htmlspecialchars($pending['first_name'] . ' ' . $pending['middle_name'] . ' ' . $pending['last_name']); ?></td>
-                                    <td><?= htmlspecialchars($pending['email']); ?></td>
-                                    <td><?= htmlspecialchars($pending['address']); ?></td>
-                                    <td><button class="view-btn" onclick="window.open('/file/image/uploads/ids/<?= htmlspecialchars($pending['id_path']); ?>', '_blank')"><i class='bx bx-show'></i>View</button></td>
-                                    <td><?= htmlspecialchars($pending['created_at']); ?></td>
-                                    <td>
-                                        <button class="approve-btn" data-uid="<?= htmlspecialchars($pending['uid'] ?? 0); ?>" onclick="approveUser(this)">
-                                            <i class='bx bx-check'></i> Approve
-                                        </button>
-                                        <button class="reject-btn" data-uid="<?= htmlspecialchars($pending['uid'] ?? 0)  ?>" onclick="rejectUser(this)">
-                                            <i class='bx bx-x'></i> Reject
-                                        </button>    
-                                    </td>   
-                                </tr>
-                               <?php endforeach; ?>
+                                <?php if (!empty($data['pendingUsers'])): ?>
+                                    <?php foreach ($data['pendingUsers'] as $pending): ?>
+                                        <tr>
+                                            <td><?= htmlspecialchars($pending['first_name'] . ' ' . $pending['middle_name'] . ' ' . $pending['last_name']); ?></td>
+                                            <td><?= htmlspecialchars($pending['email']); ?></td>
+                                            <td><?= htmlspecialchars($pending['address']); ?></td>
+                                            <td><button class="view-btn" onclick="window.open('/file/image/uploads/ids/<?= htmlspecialchars($pending['id_path']); ?>', '_blank')"><i class='bx bx-show'></i>View</button></td>
+                                            <td><?= htmlspecialchars($pending['created_at']); ?></td>
+                                            <td>
+                                                <button class="approve-btn" data-uid="<?= htmlspecialchars($pending['uid'] ?? 0); ?>" onclick="approveUser(this)">
+                                                    <i class='bx bx-check'></i> Approve
+                                                </button>
+                                                <button class="reject-btn" data-uid="<?= htmlspecialchars($pending['uid'] ?? 0)  ?>" onclick="rejectUser(this)">
+                                                    <i class='bx bx-x'></i> Reject
+                                                </button>    
+                                            </td>   
+                                        </tr>
+                                    <?php endforeach; ?>
+                                <?php else: ?>
+                                    <tr>
+                                        <td colspan="6" style="text-align: center;">
+                                            No pending user/s yet
+                                        </td>
+                                    </tr>    
+                                <?php endif; ?>    
                             </tbody>
                         </table>
                     </div>
@@ -831,29 +846,37 @@
                                 </tr>
                             </thead>
                             <tbody id="pending-items-body">
-                               <?php foreach ($data['pendingItems'] as $pendingItem): ?>
-                                <tr>
-                                    <td><?= htmlspecialchars($pendingItem['item_id']); ?></td>
-                                    <td><?= htmlspecialchars($pendingItem['title']); ?></td>
-                                    <td><?= htmlspecialchars($pendingItem['owner_name']); ?></td>
-                                    <td><?= htmlspecialchars($pendingItem['category']); ?></td>
-                                    <td><?= htmlspecialchars($pendingItem['item_condition']); ?></td>
-                                    <td>100</td>
-                                    <td><?= htmlspecialchars($pendingItem['security_deposit']); ?></td>
-                                    <td><?= htmlspecialchars($pendingItem['created_at']); ?></td>
-                                    <td>
-                                        <button class="view-btn"><i class='bx bx-show'>
-                                            </i>View
-                                        </button>
-                                        <button class="approve-btn" data-uid="<?= htmlspecialchars($pendingItem['item_id']); ?>" onclick="approveItem(this)">
-                                            <i class='bx bx-check'></i> Approve
-                                        </button>
-                                        <button class="reject-btn" data-uid="<?= htmlspecialchars($pendingItem['item_id']);  ?>" onclick="rejectItem(this)">
-                                            <i class='bx bx-x'></i> Reject
-                                        </button>    
-                                    </td>   
-                                </tr>
-                               <?php endforeach; ?> 
+                               <?php if (!empty($data['pendingItems'])): ?>
+                                    <?php foreach ($data['pendingItems'] as $pendingItem): ?>
+                                        <tr>
+                                            <td><?= htmlspecialchars($pendingItem['item_id']); ?></td>
+                                            <td><?= htmlspecialchars($pendingItem['title']); ?></td>
+                                            <td><?= htmlspecialchars($pendingItem['owner_name']); ?></td>
+                                            <td><?= htmlspecialchars($pendingItem['category']); ?></td>
+                                            <td><?= htmlspecialchars($pendingItem['item_condition']); ?></td>
+                                            <td>100</td>
+                                            <td><?= htmlspecialchars($pendingItem['security_deposit']); ?></td>
+                                            <td><?= htmlspecialchars($pendingItem['created_at']); ?></td>
+                                            <td>
+                                                <button class="view-btn"><i class='bx bx-show'>
+                                                    </i>View
+                                                </button>
+                                                <button class="approve-btn" data-uid="<?= htmlspecialchars($pendingItem['item_id']); ?>" onclick="approveItem(this)">
+                                                    <i class='bx bx-check'></i> Approve
+                                                </button>
+                                                <button class="reject-btn" data-uid="<?= htmlspecialchars($pendingItem['item_id']);  ?>" onclick="rejectItem(this)">
+                                                    <i class='bx bx-x'></i> Reject
+                                                </button>    
+                                            </td>   
+                                        </tr>
+                                    <?php endforeach; ?> 
+                                <?php else: ?>    
+                                    <tr>
+                                        <td style="text-align: center;" colspan="9">
+                                            No pending item/s yet
+                                        </td>
+                                    </tr>
+                                <?php endif; ?>    
                            </tbody>
                         </table>
                     </div>
@@ -903,10 +926,59 @@
                                     </tr>
                                <?php endforeach; ?> 
                             </tbody>
+                        </table>    
+                    </div>
+                </div>
+            </div>
+
+            
+            <!-- Pending Users Payment -->
+            <div id="pending-payments" class="section">
+                <div class="card">
+                    <h2>Pending User Payment</h2>
+                    <input type="text" class="search-bar" placeholder="Search users..." onkeyup="searchTable(this, 'pending-users-table')">
+                    <div class="table-wrapper">
+                        <table id="pending-payments-table">
+                            <thead>
+                                <tr>
+                                    <th>Booking ID</th>
+                                    <th>Renter</th>
+                                    <th>Item</th>
+                                    <th>Amout</th>
+                                    <th>Payment Status</th>
+                                    <th>Payment Proof</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="pending-users-body">
+                               <?php foreach ($data['pendingPayments'] as $pendingPayment): ?>
+                                <tr>
+                                    <td><?= htmlspecialchars($pendingPayment['payment_id']); ?></td>
+                                    <td><?= htmlspecialchars($pendingPayment['renter_name']); ?></td>
+                                    <td><?= htmlspecialchars($pendingPayment['item_name']); ?></td>
+                                    <td><?= htmlspecialchars($pendingPayment['total_amount']); ?></td>
+                                    <td><?= htmlspecialchars($pendingPayment['payment_status']); ?></td>
+                                    <td> 
+                                        <button class="view-btn">
+                                            <i class='bx bx-show'></i>View
+                                        </button>
+                                    </td>    
+                                    <td>
+                                        <button class="approve-btn" data-uid="<?= htmlspecialchars($pendingPayment['payment_id'] ?? 0); ?>" onclick="verifyPayment(this)">
+                                            <i class='bx bx-check'></i> Verify
+                                        </button>
+                                        <button class="reject-btn" data-uid="<?php //htmlspecialchars($pending['uid'] ?? 0)  ?>" onclick="rejectUser(this)">
+                                            <i class='bx bx-x'></i> Reject
+                                        </button>    
+                                    </td>   
+                                </tr>
+                               <?php endforeach; ?>
+                            </tbody>
                         </table>
                     </div>
                 </div>
             </div>
+
         </main>
     </div>
 
@@ -1007,6 +1079,41 @@
                 
                 try {
                     const response = await fetch(`/admin/rejectItem?itemId=${itemId}`);
+                    const result = await response.json();
+
+                    if (result.success) {
+                        alert(result.message);
+                        
+                        // Optional: remove after 2 seconds
+                        row.style.backgroundColor = '#d4edda';
+                        button.textContent = '✓';
+                        
+                        setTimeout(() => row.remove(), 2000);
+                    } else {
+                        // Error handling
+                        alert('Error: ' + result.error);
+                        button.disabled = false;
+                        button.textContent = "<i class='bx bx-trash'></i>";
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    alert('An error occurred. Please try again.');
+                    button.disabled = false;
+                    button.textContent = "<s='bx bx-trash'></i>";
+                }
+            }
+        }
+
+        async function verifyPayment(button) {
+            if (confirm('Are you sure you want to verify this payment?')) {
+                const paymentID = button.dataset.uid;
+                const row = button.closest('tr');
+                
+                button.textContent = 'verifying...';
+                button.disabled = true;
+                
+                try {
+                    const response = await fetch(`/admin/verifyPayment?paymentID=${paymentID}`);
                     const result = await response.json();
 
                     if (result.success) {

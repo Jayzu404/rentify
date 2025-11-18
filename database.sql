@@ -59,7 +59,7 @@ CREATE TABLE items (
   item_condition ENUM('brand_new', 'like_new', 'good', 'fair', 'poor') NOT NULL DEFAULT 'good',
   return_statement TEXT,
   security_deposit DECIMAL(10,2) DEFAULT NULL,
-  status ENUM('available', 'unavailable', 'maintenance') DEFAULT 'available',
+  status ENUM('available', 'unavailable', 'rented') DEFAULT 'available',
   approval_status ENUM('pending', 'approved', 'rejected') DEFAULT 'pending',
   approved_by INT NULL,
   approved_at DATETIME NULL,
@@ -137,10 +137,97 @@ CREATE TABLE rentals (
   start_date DATE NOT NULL,
   end_date DATE NOT NULL,
   total_amount DECIMAL(10,2) NOT NULL,
-  status ENUM('pending', 'confirmed', 'ongoing', 'completed', 'cancelled') DEFAULT 'pending',
+  status ENUM('pending', 'verified', 'ongoing', 'completed', 'cancelled', 'declined', 'return_pending') DEFAULT 'pending',
+  owner_response ENUM('pending', 'accepted', 'rejected') DEFAULT 'pending',
+  owner_response_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  rejection_reason TEXT NULL,
   created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (item_id) REFERENCES items(item_id) ON DELETE CASCADE,
   FOREIGN KEY (renter_uid) REFERENCES users(uid) ON DELETE CASCADE,
   FOREIGN KEY (pricing_id) REFERENCES rental_pricing(pricing_id) ON DELETE RESTRICT,
   FOREIGN KEY (policy_id) REFERENCES cancellation_policies(policy_id) ON DELETE SET NULL
+);
+
+-- add og confirm by the owner 
+
+-- ===============================
+-- PAYMENT TABLE (Complete)
+-- ===============================
+CREATE TABLE payment (
+  payment_id INT PRIMARY KEY AUTO_INCREMENT,
+  rental_id INT NOT NULL,
+  payment_method ENUM('gcash', 'bank', 'cash') NOT NULL,
+  payment_proof_path VARCHAR(255) NULL,
+  amount DECIMAL(10,2) NOT NULL,
+  security_deposit DECIMAL(10,2) DEFAULT 0.00,
+  total_amount DECIMAL(10,2) NOT NULL,
+  payment_status ENUM('pending', 'verified', 'rejected', 'refunded') DEFAULT 'pending',
+  payment_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  verified_by INT NULL,
+  verified_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  refund_date DATETIME NULL,
+  notes TEXT NULL,
+  FOREIGN KEY (rental_id) REFERENCES rentals(rental_id) ON DELETE CASCADE,
+  FOREIGN KEY (verified_by) REFERENCES admins(admin_id) ON DELETE SET NULL
+);
+
+-- ===============================
+-- ESCROW TABLE (for secure payments)
+-- ===============================
+CREATE TABLE escrow (
+  escrow_id INT PRIMARY KEY AUTO_INCREMENT,
+  payment_id INT NOT NULL,
+  rental_id INT NOT NULL,
+  amount_held DECIMAL(10,2) NOT NULL,
+  status ENUM('holding', 'released_to_owner', 'refunded_to_renter', 'cancelled') DEFAULT 'holding',
+  held_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  released_at DATETIME NULL,
+  released_to INT NULL,
+  release_amount DECIMAL(10,2) NULL,
+  notes TEXT NULL,
+  FOREIGN KEY (payment_id) REFERENCES payment(payment_id) ON DELETE CASCADE,
+  FOREIGN KEY (rental_id) REFERENCES rentals(rental_id) ON DELETE CASCADE,
+  FOREIGN KEY (released_to) REFERENCES users(uid) ON DELETE SET NULL
+);
+
+-- ===============================
+-- DEPOSIT REFUND TABLE
+-- ===============================
+CREATE TABLE deposit_refunds (
+  refund_id INT PRIMARY KEY AUTO_INCREMENT,
+  rental_id INT NOT NULL,
+  payment_id INT NOT NULL,
+  deposit_amount DECIMAL(10,2) NOT NULL,
+  refund_amount DECIMAL(10,2) NOT NULL,
+  deduction_amount DECIMAL(10,2) DEFAULT 0.00,
+  deduction_reason TEXT NULL,
+  refund_status ENUM('pending', 'approved', 'processed', 'rejected') DEFAULT 'pending',
+  refund_method ENUM('gcash', 'bank', 'cash') NOT NULL,
+  requested_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  processed_at DATETIME NULL,
+  processed_by INT NULL,
+  FOREIGN KEY (rental_id) REFERENCES rentals(rental_id) ON DELETE CASCADE,
+  FOREIGN KEY (payment_id) REFERENCES payment(payment_id) ON DELETE CASCADE,
+  FOREIGN KEY (processed_by) REFERENCES admins(admin_id) ON DELETE SET NULL
+);
+
+-- ===============================
+-- TRANSACTION LOG (for audit trail)
+-- ===============================
+CREATE TABLE transaction_log (
+  log_id INT PRIMARY KEY AUTO_INCREMENT,
+  rental_id INT NOT NULL,
+  payment_id INT NULL,
+  transaction_type ENUM('payment_received', 'payment_verified', 'payment_rejected', 
+                        'escrow_held', 'escrow_released', 'escrow_refunded',
+                        'deposit_held', 'deposit_refunded', 'commission_deducted') NOT NULL,
+  amount DECIMAL(10,2) NOT NULL,
+  from_user INT NULL,
+  to_user INT NULL,
+  description TEXT,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (rental_id) REFERENCES rentals(rental_id) ON DELETE CASCADE,
+  FOREIGN KEY (payment_id) REFERENCES payment(payment_id) ON DELETE SET NULL,
+  FOREIGN KEY (from_user) REFERENCES users(uid) ON DELETE SET NULL,
+  FOREIGN KEY (to_user) REFERENCES users(uid) ON DELETE SET NULL
 );

@@ -1,5 +1,11 @@
 <?php
   require_once dirname(__DIR__) . '/layouts/header.php';
+
+  if (session_status() !== PHP_SESSION_ACTIVE) {
+    session_start();
+  }
+
+  $userId = $_SESSION['user']['id'] ?? null;
   
   // Extract data passed from controller
   $items = $data['items'] ?? [];
@@ -7,6 +13,12 @@
   $totalPages = $data['totalPages'] ?? 1;
   $category = $data['category'] ?? null;
   $search = $data['search'] ?? null;
+
+  // echo '<pre>';
+  // var_dump($items);
+  // var_dump($_SESSION['user']['id']);
+  // var_dump($items['owner_id']);
+  // echo '</pre>';
   
   // Helper function for category display
   function getCategoryDisplay($cat) {
@@ -196,12 +208,14 @@
                 >
                   <i class="bi bi-eye"></i> View Details
                 </button>
-                <button 
-                  class="btn btn-primary w-50"
-                  onclick="window.location.href='/rental/request?item_id=<?= $item['item_id'] ?>'"
-                >
-                  <i class="bi bi-cart-plus"></i> Rent Now
-                </button>
+                <?php if($userId != $item['owner_id'] && $item['status'] != 'rented'): ?>
+                  <button 
+                    class="btn btn-primary w-50"
+                    onclick="window.location.href='/rental/checkout?item_id=<?= $item['item_id'] ?>'"
+                  >
+                    <i class="bi bi-cart-plus"></i> Rent Now
+                  </button>
+                <?php endif; ?>
               </div>
             </div>
           </div>

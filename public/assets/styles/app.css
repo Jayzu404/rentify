@@ -251,7 +251,7 @@ body {
 
 /* Rental Card Buttons */
 .btn-rent {
-  background-color: #ebac25;
+  background-color: #1e40af;
   color: #fff;
   font-weight: 500;
   border-radius: 8px;
@@ -262,15 +262,15 @@ body {
 }
 
 .btn-rent:hover {
-  background-color: #d79a1d;
+  background-color: #264cca;
   color: #fff;
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(235, 172, 37, 0.3);
 }
 
 .btn-view {
-  border: 2px solid #ebac25;
-  color: #ebac25;
+  border: 2px solid #1e40af;
+  color: #1e40af;
   background-color: transparent;
   font-weight: 500;
   border-radius: 8px;
@@ -280,7 +280,7 @@ body {
 }
 
 .btn-view:hover {
-  background-color: #ebac25;
+  background-color: #1e40af;
   color: #fff;
   transform: translateY(-2px);
 }
